@@ -266,7 +266,31 @@ select {
 }
 
 .graph-wrap {
-  height: 492px;
+  height: 560px;
+}
+
+.evidence-map {
+  height: 100%;
+  display: grid;
+  grid-template-rows: 34px minmax(0, 1fr);
+}
+
+.graph-legend {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  border-bottom: 1px solid var(--line-soft);
+  background: #12161b;
+}
+
+.graph-legend span {
+  color: var(--muted);
+  border-right: 1px solid var(--line-soft);
+  font-size: 11px;
+  padding: 10px 12px;
+}
+
+.graph-legend span:last-child {
+  border-right: 0;
 }
 
 .react-flow {
@@ -277,9 +301,12 @@ select {
   border: 1px solid var(--line);
   background: #20262e;
   color: var(--text);
-  border-radius: 6px;
-  font-size: 11px;
-  padding: 5px 7px;
+  border-radius: 5px;
+  font-size: 10px;
+  padding: 6px 7px;
+  line-height: 1.15;
+  text-align: left;
+  white-space: nowrap;
 }
 
 .react-flow__node.ring {
@@ -287,8 +314,62 @@ select {
   background: #211d14;
 }
 
+.react-flow__node.case {
+  border-color: #894f4f;
+  background: #211819;
+}
+
+.react-flow__node.account {
+  border-color: #3c4652;
+  background: #1c232b;
+}
+
+.react-flow__node.merchant {
+  border-color: #536b5c;
+  background: #17201b;
+}
+
+.react-flow__node.payment_instrument,
+.react-flow__node.device,
+.react-flow__node.ip_cluster {
+  border-color: #496564;
+  background: #152021;
+}
+
+.react-flow__node.transaction,
+.react-flow__node.refund,
+.react-flow__node.chargeback,
+.react-flow__node.dispute,
+.react-flow__node.support_contact,
+.react-flow__node.account_change {
+  color: #d9dee6;
+  border-color: #3d444d;
+  background: #171c22;
+}
+
+.react-flow__handle {
+  opacity: 0;
+}
+
 .react-flow__edge-path {
-  stroke: #46505d;
+  stroke: #4b5563;
+  stroke-width: 1.15;
+  opacity: 0.58;
+}
+
+.react-flow__edge.edge-ring .react-flow__edge-path {
+  stroke: var(--amber);
+  opacity: 0.72;
+}
+
+.react-flow__edge.edge-case .react-flow__edge-path {
+  stroke: var(--red);
+  opacity: 0.65;
+}
+
+.react-flow__edge.edge-infra .react-flow__edge-path {
+  stroke: var(--cyan);
+  opacity: 0.48;
 }
 
 .stack {

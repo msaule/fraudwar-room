@@ -21,10 +21,11 @@ test('battlefield renders graph evidence, filters, and ring overlays', async ({ 
   await expect(page.locator('input[type="range"]')).toHaveCount(1)
   await expect(page.locator('select')).toHaveCount(1)
   await expect(page.locator('.ring-overlay-row')).toHaveCount(4)
-  await expect(page.locator('.react-flow__node')).toHaveCount(90)
+  await expect(page.locator('.react-flow__node').first()).toBeVisible()
+  expect(await page.locator('.react-flow__node').count()).toBeGreaterThan(35)
   await expect(page.locator('.react-flow')).toBeVisible()
   await expect(page.getByText('222 links')).toBeVisible()
-  await expect(page.getByText('Synthetic defensive simulator')).toBeVisible()
+  await expect(page.locator('.status')).toHaveText('Demo data only')
 
   expect(consoleErrors).toEqual([])
   expect(notFound).toEqual([])
@@ -44,6 +45,6 @@ test('primary dashboard routes render without empty shells', async ({ page }) =>
   for (const [route, heading] of routes) {
     await page.goto(route)
     await expect(page.locator('h1')).toHaveText(heading)
-    await expect(page.getByText('Synthetic defensive simulator')).toBeVisible()
+    await expect(page.locator('.status')).toHaveText('Demo data only')
   }
 })

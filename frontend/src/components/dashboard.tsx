@@ -111,7 +111,7 @@ export function Dashboard({ run, view = 'command' }: { run: Run; view?: View }) 
       <aside className="sidebar">
         <div className="brand">
           <strong>FraudWar Room</strong>
-          <span>Adaptive fraud simulation and investigation cockpit</span>
+          <span>Fraud loss, rings, queue pressure</span>
         </div>
         <nav className="nav">
           <a className={view === 'command' ? 'active' : ''} href="/"><Radar size={16} /> Command Center</a>
@@ -130,16 +130,16 @@ export function Dashboard({ run, view = 'command' }: { run: Run; view?: View }) 
             <h1>{title}</h1>
             <p>{run.run_id} | {run.defense_name}</p>
           </div>
-          <div className="status">Synthetic defensive simulator</div>
+          <div className="status">Demo data only</div>
         </header>
         <section className="workspace">
           <div className="summary-grid">
-            <Metric label="Prevented loss" value={money(metrics.financial.fraud_dollars_blocked)} detail="blocked synthetic exposure" />
-            <Metric label="Net fraud loss" value={money(metrics.financial.fraud_dollars_missed)} detail="missed synthetic exposure" danger />
-            <Metric label="Ring recall" value={pct(metrics.graph.ring_level_recall)} detail="ring-level investigation hit rate" />
-            <Metric label="Half-life" value={`${metrics.adversarial.adversarial_half_life}`} detail="simulation days to 50% decay" />
-            <Metric label="Investigator ROI" value={`${money(metrics.financial.investigator_roi)}/hr`} detail="net saved per review hour" />
-            <Metric label="Backlog" value={compact(metrics.operations.backlog)} detail={`${activeRings} active synthetic rings`} />
+            <Metric label="Prevented loss" value={money(metrics.financial.fraud_dollars_blocked)} detail="stopped by review" />
+            <Metric label="Net fraud loss" value={money(metrics.financial.fraud_dollars_missed)} detail="missed exposure" danger />
+            <Metric label="Ring recall" value={pct(metrics.graph.ring_level_recall)} detail="rings with enough evidence" />
+            <Metric label="Half-life" value={`${metrics.adversarial.adversarial_half_life}`} detail="days until recall halves" />
+            <Metric label="Investigator ROI" value={`${money(metrics.financial.investigator_roi)}/hr`} detail="return per review hour" />
+            <Metric label="Backlog" value={compact(metrics.operations.backlog)} detail={`${activeRings} active groups`} />
           </div>
 
           {view === 'battlefield' && (
@@ -184,8 +184,8 @@ export function Dashboard({ run, view = 'command' }: { run: Run; view?: View }) 
           <div className="grid">
             <section className="panel" id="graph">
               <div className="panel-header">
-                <h2>Network Evidence</h2>
-                <span>{filteredGraph.nodes.length} entities | {filteredGraph.edges.length} links</span>
+                <h2>Evidence Map</h2>
+                <span>{filteredGraph.nodes.length} entities, {filteredGraph.edges.length} links in source graph</span>
               </div>
               <div className="graph-wrap">
                 <EvidenceGraph graph={filteredGraph} />
@@ -195,8 +195,8 @@ export function Dashboard({ run, view = 'command' }: { run: Run; view?: View }) 
             <div className="stack">
               <section className="panel">
                 <div className="panel-header">
-                  <h2>Adversarial Decay</h2>
-                  <span>pre/post adaptation</span>
+                  <h2>Recall Under Drift</h2>
+                  <span>daily recall estimate</span>
                 </div>
                 <div className="chart">
                   <ResponsiveContainer>
@@ -213,7 +213,7 @@ export function Dashboard({ run, view = 'command' }: { run: Run; view?: View }) 
 
               <section className="panel">
                 <div className="panel-header">
-                  <h2>Battlefield Timeline</h2>
+                  <h2>Event Log</h2>
                   <span>{timeline.length} events through D{dayLimit}</span>
                 </div>
                 <div className="timeline">
@@ -238,7 +238,7 @@ export function Dashboard({ run, view = 'command' }: { run: Run; view?: View }) 
             <section className="panel" id="cases">
               <div className="panel-header">
                 <h2>Case Queue</h2>
-                <span>{run.cases.length} cases sampled</span>
+                <span>{run.cases.length} cases in sample queue</span>
               </div>
               <div className="table-wrap">
                 <table>
@@ -273,7 +273,7 @@ export function Dashboard({ run, view = 'command' }: { run: Run; view?: View }) 
             <section className="panel" id="defenses">
               <div className="panel-header">
                 <h2>Defense Comparison</h2>
-                <span>classification and ring outcomes</span>
+                <span>transaction and ring outcomes</span>
               </div>
               <div className="chart">
                 <ResponsiveContainer>
@@ -296,7 +296,7 @@ export function Dashboard({ run, view = 'command' }: { run: Run; view?: View }) 
             <section className="panel">
               <div className="panel-header">
                 <h2>Threshold Controls</h2>
-                <span>projected queue pressure</span>
+                <span>alert budget model</span>
               </div>
               <div className="controls-grid">
                 <label>
@@ -323,11 +323,11 @@ export function Dashboard({ run, view = 'command' }: { run: Run; view?: View }) 
                 </label>
                 <div className="control-result">
                   <strong>{projectedAlerts}</strong>
-                  <span>projected alerts before budget cap</span>
+                  <span>alerts before budget cap</span>
                 </div>
                 <div className="control-result">
                   <strong>{Math.max(0, projectedAlerts - alertBudget)}</strong>
-                  <span>projected backlog pressure</span>
+                  <span>expected backlog</span>
                 </div>
               </div>
             </section>
@@ -339,7 +339,7 @@ export function Dashboard({ run, view = 'command' }: { run: Run; view?: View }) 
             <section className="panel" id="rings">
               <div className="panel-header">
                 <h2>Active Rings</h2>
-                <span>abstract synthetic behavior only</span>
+                <span>simulated groups</span>
               </div>
               <div className="table-wrap">
                 <table>
@@ -373,8 +373,8 @@ export function Dashboard({ run, view = 'command' }: { run: Run; view?: View }) 
             {(view === 'command' || view === 'after-action') && (
             <section className="panel" id="report">
               <div className="panel-header">
-                <h2>After-Action Summary</h2>
-                <span>executive report</span>
+                <h2>Decision Memo</h2>
+                <span>run summary</span>
               </div>
               <div className="report">
                 <ReportRow icon={<Scale size={16} />} title="Recommendation" text={run.report.recommendation} />
@@ -389,8 +389,8 @@ export function Dashboard({ run, view = 'command' }: { run: Run; view?: View }) 
           {view === 'experiments' && (
             <section className="panel">
               <div className="panel-header">
-                <h2>Experiment Registry</h2>
-                <span>implemented benchmark scenarios</span>
+                <h2>Benchmarks</h2>
+                <span>available runs</span>
               </div>
               <div className="table-wrap">
                 <table>
@@ -419,7 +419,7 @@ export function Dashboard({ run, view = 'command' }: { run: Run; view?: View }) 
             <section className="panel">
               <div className="panel-header">
                 <h2>Methodology</h2>
-                <span>synthetic-only evaluation boundary</span>
+                <span>how this run is measured</span>
               </div>
               <div className="method-grid">
                 {Object.entries(run.entities ?? {}).map(([key, value]) => (
@@ -430,17 +430,17 @@ export function Dashboard({ run, view = 'command' }: { run: Run; view?: View }) 
                 ))}
               </div>
               <p className="method-copy">
-                Labels are synthetic ground truth for evaluation. Investigator labels are simulated
-                from that closed world for active learning. Adaptation events adjust abstract ring
-                parameters and do not describe real-world abuse methods.
+                The run uses generated accounts, merchants, instruments, transactions, cases, and
+                labels. Labels are held back from the simulated review queue and used only to score
+                the defenses. Drift changes model inputs inside the simulator; it does not describe
+                real-world abuse methods.
               </p>
             </section>
           )}
 
           <p className="disclaimer" id="method">
-            FraudWar Room uses synthetic data and abstract adversarial behavior for defensive
-            research, analytics, and portfolio demonstration. It is not a guide to committing
-            fraud and must not be used to facilitate abuse.
+            Demo data only. Do not use this project with real customer, payment, or case data.
+            The simulator is for defensive evaluation, not guidance for abuse.
           </p>
         </section>
       </main>
@@ -526,32 +526,32 @@ function experimentRows() {
   return [
     {
       name: 'Static Fraud vs Adaptive Fraud',
-      question: 'Which defense survives abstract ring adaptation?',
+      question: 'How much recall is lost after drift?',
       status: 'implemented'
     },
     {
       name: 'Transaction Model vs Graph Model',
-      question: 'Which detects coordinated rings earlier?',
+      question: 'Does graph context improve ring discovery?',
       status: 'implemented'
     },
     {
       name: 'Recall vs Investigator Overload',
-      question: 'When does higher recall become operationally unusable?',
+      question: 'Where does added recall overload review?',
       status: 'implemented'
     },
     {
       name: 'Ring Takedown vs Account Takedown',
-      question: 'Does ring-priority review improve dollars per hour?',
+      question: 'Does group review return more per hour?',
       status: 'implemented'
     },
     {
       name: 'Active Learning Under Drift',
-      question: 'Do simulated labels improve post-adaptation scoring?',
+      question: 'Do review labels help after drift?',
       status: 'implemented'
     },
     {
       name: 'Adaptive Thresholding',
-      question: 'Can thresholds respect queue pressure?',
+      question: 'Can thresholds keep the queue usable?',
       status: 'implemented'
     }
   ]
