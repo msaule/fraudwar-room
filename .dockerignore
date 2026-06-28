@@ -1,0 +1,17 @@
+.git
+.venv
+__pycache__
+.pytest_cache
+.ruff_cache
+**/*.pyc
+frontend/.next
+frontend/node_modules
+frontend/test-results
+frontend/playwright-report
+backend/.pytest_cache
+backend/fraudwar.egg-info
+data/generated
+data/demo
+data/benchmarks
+.env
+.env.*

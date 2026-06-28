@@ -1,0 +1,32 @@
+[project]
+name = "fraudwar"
+version = "0.1.0"
+description = "Adaptive synthetic fraud simulation and investigation cockpit"
+requires-python = ">=3.11"
+dependencies = [
+  "fastapi>=0.115",
+  "uvicorn>=0.30",
+  "pydantic>=2.8",
+  "SQLAlchemy>=2.0",
+  "numpy>=1.26",
+  "pandas>=2.2",
+  "scikit-learn>=1.5",
+  "networkx>=3.3",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.2", "ruff>=0.5"]
+gnn = ["torch>=2.3", "torch-geometric>=2.5"]
+llm = []
+all = ["torch>=2.3", "torch-geometric>=2.5"]
+
+[project.scripts]
+fraudwar = "fraudwar.cli:main"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"

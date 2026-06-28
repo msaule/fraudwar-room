@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FraudWar Scenario",
+  "type": "object",
+  "required": ["scenario_id", "seed", "accounts", "merchants", "transactions", "rings"],
+  "properties": {
+    "scenario_id": {"type": "string"},
+    "seed": {"type": "integer"},
+    "accounts": {"type": "integer", "minimum": 1},
+    "merchants": {"type": "integer", "minimum": 1},
+    "transactions": {"type": "integer", "minimum": 1},
+    "rings": {"type": "integer", "minimum": 0},
+    "days": {"type": "integer", "minimum": 1},
+    "safety_boundary": {
+      "type": "string",
+      "const": "synthetic defensive simulation only"
+    }
+  }
+}
+

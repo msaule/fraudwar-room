@@ -1,0 +1,4100 @@
+{
+  "run_id": "run_static_vs_adaptive_42",
+  "experiment_id": "static-vs-adaptive",
+  "experiment_name": "Static Fraud vs Adaptive Fraud",
+  "seed": 42,
+  "days": 20,
+  "defense_name": "graph_feature_model",
+  "metrics": {
+    "classification": {
+      "precision": 0.2857,
+      "recall": 0.0833,
+      "f1": 0.129,
+      "auroc": 0.5297,
+      "auprc": 0.1093,
+      "alerts": 7.0
+    },
+    "financial": {
+      "fraud_dollars_attempted": 3766.81,
+      "fraud_dollars_blocked": 239.71,
+      "fraud_dollars_missed": 3527.1,
+      "false_positive_cost": 120.0,
+      "review_cost": 341.25,
+      "net_savings": -221.54,
+      "investigator_roi": -42.2
+    },
+    "operations": {
+      "cases_opened": 7.0,
+      "cases_reviewed": 7.0,
+      "backlog": 0.0,
+      "investigator_hours_used": 5.25,
+      "sla_missed": 0.0
+    },
+    "graph": {
+      "ring_level_recall": 0.0,
+      "time_to_first_detection": 9.5,
+      "time_to_ring_linkage": 11.0
+    },
+    "adversarial": {
+      "pre_adaptation_recall": 0.1011,
+      "post_adaptation_recall": 0.0653,
+      "recall_decay": 0.0358,
+      "adversarial_half_life": 3.25,
+      "defense_brittleness_score": 0.0358,
+      "strategy_robustness_index": 0.1161,
+      "adaptation_pressure": 0.5
+    },
+    "strategy": {}
+  },
+  "rings": [
+    {
+      "ring_id": "ring_000",
+      "ring_type": "mule_network",
+      "start_day": 8,
+      "active": true,
+      "adaptation_strategy": "reduce_attention",
+      "members": [
+        "acct_000175",
+        "acct_000013",
+        "acct_000337",
+        "acct_000043",
+        "acct_000195",
+        "acct_000161",
+        "acct_000283",
+        "acct_000120",
+        "acct_000040",
+        "acct_000207",
+        "acct_000027",
+        "acct_000037",
+        "acct_000300",
+        "acct_000089",
+        "acct_000144",
+        "acct_000052",
+        "acct_000326",
+        "acct_000228",
+        "acct_000272"
+      ],
+      "merchants": [
+        "merch_00000",
+        "merch_00011",
+        "merch_00024",
+        "merch_00031"
+      ],
+      "shared_devices": [
+        "ring_dev_000_0",
+        "ring_dev_000_1",
+        "ring_dev_000_2",
+        "ring_dev_000_3"
+      ],
+      "shared_ip_clusters": [
+        "ring_ip_000_0",
+        "ring_ip_000_1",
+        "ring_ip_000_2"
+      ],
+      "detected": false,
+      "disrupted": false,
+      "velocity_multiplier": 0.82,
+      "amount_multiplier": 1.0,
+      "refund_multiplier": 1.0,
+      "shared_infra_multiplier": 1.0,
+      "detection_memory": [
+        "day 20: 1 reviewed synthetic cases"
+      ]
+    },
+    {
+      "ring_id": "ring_001",
+      "ring_type": "refund_abuse_ring",
+      "start_day": 7,
+      "active": true,
+      "adaptation_strategy": "reduce_attention",
+      "members": [
+        "acct_000325",
+        "acct_000292",
+        "acct_000234",
+        "acct_000163",
+        "acct_000343",
+        "acct_000259",
+        "acct_000140",
+        "acct_000005",
+        "acct_000003",
+        "acct_000275",
+        "acct_000266",
+        "acct_000126",
+        "acct_000314",
+        "acct_000118",
+        "acct_000097",
+        "acct_000339",
+        "acct_000328",
+        "acct_000058",
+        "acct_000288",
+        "acct_000122",
+        "acct_000063",
+        "acct_000081",
+        "acct_000330",
+        "acct_000121",
+        "acct_000344",
+        "acct_000072",
+        "acct_000232",
+        "acct_000199",
+        "acct_000085",
+        "acct_000064",
+        "acct_000035"
+      ],
+      "merchants": [
+        "merch_00016",
+        "merch_00021",
+        "merch_00040",
+        "merch_00022",
+        "merch_00012",
+        "merch_00020"
+      ],
+      "shared_devices": [
+        "ring_dev_001_0",
+        "ring_dev_001_1",
+        "ring_dev_001_2",
+        "ring_dev_001_3"
+      ],
+      "shared_ip_clusters": [
+        "ring_ip_001_0",
+        "ring_ip_001_1"
+      ],
+      "detected": false,
+      "disrupted": false,
+      "velocity_multiplier": 1.0,
+      "amount_multiplier": 1.0,
+      "refund_multiplier": 1.0,
+      "shared_infra_multiplier": 1.0,
+      "detection_memory": []
+    },
+    {
+      "ring_id": "ring_002",
+      "ring_type": "account_takeover_cluster",
+      "start_day": 3,
+      "active": true,
+      "adaptation_strategy": "reduce_attention",
+      "members": [
+        "acct_000250",
+        "acct_000021",
+        "acct_000301",
+        "acct_000014",
+        "acct_000317",
+        "acct_000188",
+        "acct_000011",
+        "acct_000105",
+        "acct_000012",
+        "acct_000159",
+        "acct_000223",
+        "acct_000068",
+        "acct_000100",
+        "acct_000222",
+        "acct_000240",
+        "acct_000157",
+        "acct_000258",
+        "acct_000229",
+        "acct_000091",
+        "acct_000276",
+        "acct_000132",
+        "acct_000304",
+        "acct_000322",
+        "acct_000191",
+        "acct_000273",
+        "acct_000268",
+        "acct_000135",
+        "acct_000218",
+        "acct_000002",
+        "acct_000298",
+        "acct_000154",
+        "acct_000046",
+        "acct_000345",
+        "acct_000096",
+        "acct_000318",
+        "acct_000137"
+      ],
+      "merchants": [
+        "merch_00031",
+        "merch_00004",
+        "merch_00026",
+        "merch_00006",
+        "merch_00018",
+        "merch_00042",
+        "merch_00008"
+      ],
+      "shared_devices": [
+        "ring_dev_002_0",
+        "ring_dev_002_1",
+        "ring_dev_002_2",
+        "ring_dev_002_3"
+      ],
+      "shared_ip_clusters": [
+        "ring_ip_002_0"
+      ],
+      "detected": false,
+      "disrupted": false,
+      "velocity_multiplier": 1.0,
+      "amount_multiplier": 1.0,
+      "refund_multiplier": 1.0,
+      "shared_infra_multiplier": 1.0,
+      "detection_memory": [
+        "day 20: 1 reviewed synthetic cases"
+      ]
+    },
+    {
+      "ring_id": "ring_003",
+      "ring_type": "synthetic_identity_ring",
+      "start_day": 6,
+      "active": true,
+      "adaptation_strategy": "slow_burn",
+      "members": [
+        "acct_000155",
+        "acct_000246",
+        "acct_000252",
+        "acct_000198",
+        "acct_000053",
+        "acct_000260",
+        "acct_000315",
+        "acct_000016",
+        "acct_000320",
+        "acct_000020",
+        "acct_000074",
+        "acct_000281",
+        "acct_000152",
+        "acct_000237",
+        "acct_000190",
+        "acct_000290",
+        "acct_000087",
+        "acct_000086",
+        "acct_000098",
+        "acct_000321",
+        "acct_000030",
+        "acct_000018",
+        "acct_000203",
+        "acct_000119",
+        "acct_000128",
+        "acct_000180",
+        "acct_000249",
+        "acct_000077",
+        "acct_000142",
+        "acct_000125",
+        "acct_000185",
+        "acct_000101",
+        "acct_000080",
+        "acct_000025",
+        "acct_000031",
+        "acct_000156",
+        "acct_000174",
+        "acct_000113"
+      ],
+      "merchants": [
+        "merch_00043",
+        "merch_00005",
+        "merch_00001"
+      ],
+      "shared_devices": [
+        "ring_dev_003_0",
+        "ring_dev_003_1",
+        "ring_dev_003_2",
+        "ring_dev_003_3",
+        "ring_dev_003_4",
+        "ring_dev_003_5"
+      ],
+      "shared_ip_clusters": [
+        "ring_ip_003_0",
+        "ring_ip_003_1"
+      ],
+      "detected": false,
+      "disrupted": false,
+      "velocity_multiplier": 1.0,
+      "amount_multiplier": 1.0,
+      "refund_multiplier": 1.0,
+      "shared_infra_multiplier": 1.0,
+      "detection_memory": []
+    }
+  ],
+  "entities": {
+    "customers": 350,
+    "accounts": 350,
+    "payment_instruments": 517,
+    "devices": 385,
+    "ip_clusters": 1450,
+    "merchant_categories": 9,
+    "merchants": 45,
+    "transactions": 1500,
+    "refunds": 144,
+    "chargebacks": 26,
+    "disputes": 35,
+    "support_contacts": 93,
+    "account_changes": 20
+  },
+  "cases": [
+    {
+      "case_id": "case_00003_acct_000191",
+      "day_opened": 12,
+      "alert_ids": [
+        "alert_graph_model_acct_000191"
+      ],
+      "account_ids": [
+        "acct_000191"
+      ],
+      "merchant_ids": [],
+      "ring_id": "ring_002",
+      "priority_score": 0.9866,
+      "dollar_exposure": 73.48,
+      "false_positive_risk": 0.2134,
+      "recommended_action": "link to ring and escalate synthetic disruption review",
+      "status": "reviewed",
+      "investigator_id": "inv_00",
+      "review_hours": 0.75,
+      "notes": "Synthetic evidence bundle generated for defensive simulation."
+    },
+    {
+      "case_id": "case_00001_acct_000048",
+      "day_opened": 12,
+      "alert_ids": [
+        "alert_graph_model_acct_000048"
+      ],
+      "account_ids": [
+        "acct_000048"
+      ],
+      "merchant_ids": [],
+      "ring_id": null,
+      "priority_score": 0.9673,
+      "dollar_exposure": 186.37,
+      "false_positive_risk": 0.0327,
+      "recommended_action": "hold transaction/account for synthetic investigator review",
+      "status": "reviewed",
+      "investigator_id": "inv_01",
+      "review_hours": 0.75,
+      "notes": "Synthetic evidence bundle generated for defensive simulation."
+    },
+    {
+      "case_id": "case_00002_acct_000173",
+      "day_opened": 14,
+      "alert_ids": [
+        "alert_graph_model_acct_000173"
+      ],
+      "account_ids": [
+        "acct_000173"
+      ],
+      "merchant_ids": [],
+      "ring_id": null,
+      "priority_score": 0.9248,
+      "dollar_exposure": 487.01,
+      "false_positive_risk": 0.0752,
+      "recommended_action": "hold transaction/account for synthetic investigator review",
+      "status": "reviewed",
+      "investigator_id": "inv_02",
+      "review_hours": 0.75,
+      "notes": "Synthetic evidence bundle generated for defensive simulation."
+    },
+    {
+      "case_id": "case_00004_acct_000192",
+      "day_opened": 16,
+      "alert_ids": [
+        "alert_graph_model_acct_000192"
+      ],
+      "account_ids": [
+        "acct_000192"
+      ],
+      "merchant_ids": [],
+      "ring_id": null,
+      "priority_score": 0.9248,
+      "dollar_exposure": 340.05,
+      "false_positive_risk": 0.0752,
+      "recommended_action": "hold transaction/account for synthetic investigator review",
+      "status": "reviewed",
+      "investigator_id": "inv_03",
+      "review_hours": 0.75,
+      "notes": "Synthetic evidence bundle generated for defensive simulation."
+    },
+    {
+      "case_id": "case_00000_acct_000034",
+      "day_opened": 18,
+      "alert_ids": [
+        "alert_graph_model_acct_000034"
+      ],
+      "account_ids": [
+        "acct_000034"
+      ],
+      "merchant_ids": [],
+      "ring_id": null,
+      "priority_score": 0.9248,
+      "dollar_exposure": 271.33,
+      "false_positive_risk": 0.0752,
+      "recommended_action": "hold transaction/account for synthetic investigator review",
+      "status": "reviewed",
+      "investigator_id": "inv_00",
+      "review_hours": 0.75,
+      "notes": "Synthetic evidence bundle generated for defensive simulation."
+    },
+    {
+      "case_id": "case_00006_acct_000300",
+      "day_opened": 18,
+      "alert_ids": [
+        "alert_graph_model_acct_000300"
+      ],
+      "account_ids": [
+        "acct_000300"
+      ],
+      "merchant_ids": [],
+      "ring_id": "ring_000",
+      "priority_score": 0.71,
+      "dollar_exposure": 166.23,
+      "false_positive_risk": 0.49,
+      "recommended_action": "link to ring and escalate synthetic disruption review",
+      "status": "reviewed",
+      "investigator_id": "inv_01",
+      "review_hours": 0.75,
+      "notes": "Synthetic evidence bundle generated for defensive simulation."
+    },
+    {
+      "case_id": "case_00005_acct_000279",
+      "day_opened": 19,
+      "alert_ids": [
+        "alert_graph_model_acct_000279"
+      ],
+      "account_ids": [
+        "acct_000279"
+      ],
+      "merchant_ids": [],
+      "ring_id": null,
+      "priority_score": 0.6313,
+      "dollar_exposure": 61.94,
+      "false_positive_risk": 0.3687,
+      "recommended_action": "hold transaction/account for synthetic investigator review",
+      "status": "reviewed",
+      "investigator_id": "inv_02",
+      "review_hours": 0.75,
+      "notes": "Synthetic evidence bundle generated for defensive simulation."
+    }
+  ],
+  "alerts": [
+    {
+      "alert_id": "alert_graph_model_acct_000034",
+      "day": 18,
+      "entity_id": "acct_000034",
+      "entity_type": "account",
+      "score": 0.9248,
+      "reason": "graph_model account risk score",
+      "dollar_exposure": 271.33,
+      "ring_id": null,
+      "is_true_positive": false
+    },
+    {
+      "alert_id": "alert_graph_model_acct_000048",
+      "day": 12,
+      "entity_id": "acct_000048",
+      "entity_type": "account",
+      "score": 0.9673,
+      "reason": "graph_model account risk score",
+      "dollar_exposure": 186.37,
+      "ring_id": null,
+      "is_true_positive": false
+    },
+    {
+      "alert_id": "alert_graph_model_acct_000173",
+      "day": 14,
+      "entity_id": "acct_000173",
+      "entity_type": "account",
+      "score": 0.9248,
+      "reason": "graph_model account risk score",
+      "dollar_exposure": 487.01,
+      "ring_id": null,
+      "is_true_positive": false
+    },
+    {
+      "alert_id": "alert_graph_model_acct_000191",
+      "day": 12,
+      "entity_id": "acct_000191",
+      "entity_type": "account",
+      "score": 0.7866,
+      "reason": "graph_model account risk score",
+      "dollar_exposure": 73.48,
+      "ring_id": "ring_002",
+      "is_true_positive": true
+    },
+    {
+      "alert_id": "alert_graph_model_acct_000192",
+      "day": 16,
+      "entity_id": "acct_000192",
+      "entity_type": "account",
+      "score": 0.9248,
+      "reason": "graph_model account risk score",
+      "dollar_exposure": 340.05,
+      "ring_id": null,
+      "is_true_positive": false
+    },
+    {
+      "alert_id": "alert_graph_model_acct_000279",
+      "day": 19,
+      "entity_id": "acct_000279",
+      "entity_type": "account",
+      "score": 0.6313,
+      "reason": "graph_model account risk score",
+      "dollar_exposure": 61.94,
+      "ring_id": null,
+      "is_true_positive": false
+    },
+    {
+      "alert_id": "alert_graph_model_acct_000300",
+      "day": 18,
+      "entity_id": "acct_000300",
+      "entity_type": "account",
+      "score": 0.51,
+      "reason": "graph_model account risk score",
+      "dollar_exposure": 166.23,
+      "ring_id": "ring_000",
+      "is_true_positive": true
+    }
+  ],
+  "timeline": [
+    {
+      "day": 3,
+      "type": "ring_emergence",
+      "title": "ring_002 emerged",
+      "detail": "account_takeover_cluster entered the synthetic network"
+    },
+    {
+      "day": 6,
+      "type": "ring_emergence",
+      "title": "ring_003 emerged",
+      "detail": "synthetic_identity_ring entered the synthetic network"
+    },
+    {
+      "day": 7,
+      "type": "ring_emergence",
+      "title": "ring_001 emerged",
+      "detail": "refund_abuse_ring entered the synthetic network"
+    },
+    {
+      "day": 8,
+      "type": "ring_emergence",
+      "title": "ring_000 emerged",
+      "detail": "mule_network entered the synthetic network"
+    },
+    {
+      "day": 12,
+      "type": "detection",
+      "title": "acct_000048 alerted",
+      "detail": "graph_model account risk score"
+    },
+    {
+      "day": 12,
+      "type": "detection",
+      "title": "acct_000191 alerted",
+      "detail": "graph_model account risk score"
+    },
+    {
+      "day": 14,
+      "type": "detection",
+      "title": "acct_000173 alerted",
+      "detail": "graph_model account risk score"
+    },
+    {
+      "day": 16,
+      "type": "detection",
+      "title": "acct_000192 alerted",
+      "detail": "graph_model account risk score"
+    },
+    {
+      "day": 18,
+      "type": "detection",
+      "title": "acct_000034 alerted",
+      "detail": "graph_model account risk score"
+    },
+    {
+      "day": 18,
+      "type": "detection",
+      "title": "acct_000300 alerted",
+      "detail": "graph_model account risk score"
+    },
+    {
+      "day": 19,
+      "type": "detection",
+      "title": "acct_000279 alerted",
+      "detail": "graph_model account risk score"
+    },
+    {
+      "day": 20,
+      "type": "adaptation",
+      "title": "ring_000 adapted",
+      "detail": "lower_velocity"
+    },
+    {
+      "day": 20,
+      "type": "adaptation",
+      "title": "ring_002 adapted",
+      "detail": "split_cluster"
+    }
+  ],
+  "graph": {
+    "nodes": [
+      {
+        "id": "ring_002",
+        "label": "ring_002",
+        "type": "ring",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "ring_003",
+        "label": "ring_003",
+        "type": "ring",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "ring_001",
+        "label": "ring_001",
+        "type": "ring",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "ring_000",
+        "label": "ring_000",
+        "type": "ring",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "case_00003_acct_000191",
+        "label": "case_00003_acct_000191",
+        "type": "case",
+        "ring_id": "ring_002",
+        "risk": 0.9866
+      },
+      {
+        "id": "case_00006_acct_000300",
+        "label": "case_00006_acct_000300",
+        "type": "case",
+        "ring_id": "ring_000",
+        "risk": 0.71
+      },
+      {
+        "id": "case_00001_acct_000048",
+        "label": "case_00001_acct_000048",
+        "type": "case",
+        "ring_id": null,
+        "risk": 0.9673
+      },
+      {
+        "id": "case_00002_acct_000173",
+        "label": "case_00002_acct_000173",
+        "type": "case",
+        "ring_id": null,
+        "risk": 0.9248
+      },
+      {
+        "id": "case_00004_acct_000192",
+        "label": "case_00004_acct_000192",
+        "type": "case",
+        "ring_id": null,
+        "risk": 0.9248
+      },
+      {
+        "id": "case_00000_acct_000034",
+        "label": "case_00000_acct_000034",
+        "type": "case",
+        "ring_id": null,
+        "risk": 0.9248
+      },
+      {
+        "id": "case_00005_acct_000279",
+        "label": "case_00005_acct_000279",
+        "type": "case",
+        "ring_id": null,
+        "risk": 0.6313
+      },
+      {
+        "id": "acct_000140",
+        "label": "acct_000140",
+        "type": "account",
+        "ring_id": "ring_001",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000020",
+        "label": "acct_000020",
+        "type": "account",
+        "ring_id": "ring_003",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000300",
+        "label": "acct_000300",
+        "type": "account",
+        "ring_id": "ring_000",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000191",
+        "label": "acct_000191",
+        "type": "account",
+        "ring_id": "ring_002",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000063",
+        "label": "acct_000063",
+        "type": "account",
+        "ring_id": "ring_001",
+        "risk": "medium"
+      },
+      {
+        "id": "acct_000222",
+        "label": "acct_000222",
+        "type": "account",
+        "ring_id": "ring_002",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000258",
+        "label": "acct_000258",
+        "type": "account",
+        "ring_id": "ring_002",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000074",
+        "label": "acct_000074",
+        "type": "account",
+        "ring_id": "ring_003",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000096",
+        "label": "acct_000096",
+        "type": "account",
+        "ring_id": "ring_002",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000144",
+        "label": "acct_000144",
+        "type": "account",
+        "ring_id": "ring_000",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000275",
+        "label": "acct_000275",
+        "type": "account",
+        "ring_id": "ring_001",
+        "risk": "medium"
+      },
+      {
+        "id": "acct_000315",
+        "label": "acct_000315",
+        "type": "account",
+        "ring_id": "ring_003",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000325",
+        "label": "acct_000325",
+        "type": "account",
+        "ring_id": "ring_001",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000052",
+        "label": "acct_000052",
+        "type": "account",
+        "ring_id": "ring_000",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000068",
+        "label": "acct_000068",
+        "type": "account",
+        "ring_id": "ring_002",
+        "risk": "medium"
+      },
+      {
+        "id": "acct_000120",
+        "label": "acct_000120",
+        "type": "account",
+        "ring_id": "ring_000",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000012",
+        "label": "acct_000012",
+        "type": "account",
+        "ring_id": "ring_002",
+        "risk": "medium"
+      },
+      {
+        "id": "acct_000014",
+        "label": "acct_000014",
+        "type": "account",
+        "ring_id": "ring_002",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000018",
+        "label": "acct_000018",
+        "type": "account",
+        "ring_id": "ring_003",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000101",
+        "label": "acct_000101",
+        "type": "account",
+        "ring_id": "ring_003",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000161",
+        "label": "acct_000161",
+        "type": "account",
+        "ring_id": "ring_000",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000195",
+        "label": "acct_000195",
+        "type": "account",
+        "ring_id": "ring_000",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000228",
+        "label": "acct_000228",
+        "type": "account",
+        "ring_id": "ring_000",
+        "risk": "high"
+      },
+      {
+        "id": "acct_000260",
+        "label": "acct_000260",
+        "type": "account",
+        "ring_id": "ring_003",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000268",
+        "label": "acct_000268",
+        "type": "account",
+        "ring_id": "ring_002",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000304",
+        "label": "acct_000304",
+        "type": "account",
+        "ring_id": "ring_002",
+        "risk": "medium"
+      },
+      {
+        "id": "acct_000322",
+        "label": "acct_000322",
+        "type": "account",
+        "ring_id": "ring_002",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000137",
+        "label": "acct_000137",
+        "type": "account",
+        "ring_id": "ring_002",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000156",
+        "label": "acct_000156",
+        "type": "account",
+        "ring_id": "ring_003",
+        "risk": "medium"
+      },
+      {
+        "id": "acct_000317",
+        "label": "acct_000317",
+        "type": "account",
+        "ring_id": "ring_002",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000330",
+        "label": "acct_000330",
+        "type": "account",
+        "ring_id": "ring_001",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000119",
+        "label": "acct_000119",
+        "type": "account",
+        "ring_id": "ring_003",
+        "risk": "high"
+      },
+      {
+        "id": "acct_000207",
+        "label": "acct_000207",
+        "type": "account",
+        "ring_id": "ring_000",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000328",
+        "label": "acct_000328",
+        "type": "account",
+        "ring_id": "ring_001",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000016",
+        "label": "acct_000016",
+        "type": "account",
+        "ring_id": "ring_003",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000030",
+        "label": "acct_000030",
+        "type": "account",
+        "ring_id": "ring_003",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000031",
+        "label": "acct_000031",
+        "type": "account",
+        "ring_id": "ring_003",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000035",
+        "label": "acct_000035",
+        "type": "account",
+        "ring_id": "ring_001",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000037",
+        "label": "acct_000037",
+        "type": "account",
+        "ring_id": "ring_000",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000040",
+        "label": "acct_000040",
+        "type": "account",
+        "ring_id": "ring_000",
+        "risk": "high"
+      },
+      {
+        "id": "acct_000046",
+        "label": "acct_000046",
+        "type": "account",
+        "ring_id": "ring_002",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000077",
+        "label": "acct_000077",
+        "type": "account",
+        "ring_id": "ring_003",
+        "risk": "medium"
+      },
+      {
+        "id": "acct_000081",
+        "label": "acct_000081",
+        "type": "account",
+        "ring_id": "ring_001",
+        "risk": "medium"
+      },
+      {
+        "id": "acct_000100",
+        "label": "acct_000100",
+        "type": "account",
+        "ring_id": "ring_002",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000113",
+        "label": "acct_000113",
+        "type": "account",
+        "ring_id": "ring_003",
+        "risk": "medium"
+      },
+      {
+        "id": "acct_000125",
+        "label": "acct_000125",
+        "type": "account",
+        "ring_id": "ring_003",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000128",
+        "label": "acct_000128",
+        "type": "account",
+        "ring_id": "ring_003",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000159",
+        "label": "acct_000159",
+        "type": "account",
+        "ring_id": "ring_002",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000175",
+        "label": "acct_000175",
+        "type": "account",
+        "ring_id": "ring_000",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000180",
+        "label": "acct_000180",
+        "type": "account",
+        "ring_id": "ring_003",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000185",
+        "label": "acct_000185",
+        "type": "account",
+        "ring_id": "ring_003",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000199",
+        "label": "acct_000199",
+        "type": "account",
+        "ring_id": "ring_001",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000203",
+        "label": "acct_000203",
+        "type": "account",
+        "ring_id": "ring_003",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000266",
+        "label": "acct_000266",
+        "type": "account",
+        "ring_id": "ring_001",
+        "risk": "low"
+      },
+      {
+        "id": "merch_00031",
+        "label": "merch_00031",
+        "type": "merchant",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "merch_00033",
+        "label": "merch_00033",
+        "type": "merchant",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "merch_00036",
+        "label": "merch_00036",
+        "type": "merchant",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "merch_00012",
+        "label": "merch_00012",
+        "type": "merchant",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "merch_00019",
+        "label": "merch_00019",
+        "type": "merchant",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "merch_00015",
+        "label": "merch_00015",
+        "type": "merchant",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "merch_00017",
+        "label": "merch_00017",
+        "type": "merchant",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "merch_00023",
+        "label": "merch_00023",
+        "type": "merchant",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "merch_00027",
+        "label": "merch_00027",
+        "type": "merchant",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "merch_00030",
+        "label": "merch_00030",
+        "type": "merchant",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "merch_00006",
+        "label": "merch_00006",
+        "type": "merchant",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "merch_00000",
+        "label": "merch_00000",
+        "type": "merchant",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "merch_00007",
+        "label": "merch_00007",
+        "type": "merchant",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "merch_00022",
+        "label": "merch_00022",
+        "type": "merchant",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "merch_00013",
+        "label": "merch_00013",
+        "type": "merchant",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "merch_00024",
+        "label": "merch_00024",
+        "type": "merchant",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "merch_00020",
+        "label": "merch_00020",
+        "type": "merchant",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "merch_00043",
+        "label": "merch_00043",
+        "type": "merchant",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "merch_00018",
+        "label": "merch_00018",
+        "type": "merchant",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "merch_00021",
+        "label": "merch_00021",
+        "type": "merchant",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "merch_00042",
+        "label": "merch_00042",
+        "type": "merchant",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "merch_00002",
+        "label": "merch_00002",
+        "type": "merchant",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "merch_00034",
+        "label": "merch_00034",
+        "type": "merchant",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "merch_00026",
+        "label": "merch_00026",
+        "type": "merchant",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "txn_00000124",
+        "label": "txn_00000124",
+        "type": "transaction",
+        "ring_id": "ring_000",
+        "risk": 166.23
+      },
+      {
+        "id": "txn_00000277",
+        "label": "txn_00000277",
+        "type": "transaction",
+        "ring_id": "ring_001",
+        "risk": 139.36
+      },
+      {
+        "id": "txn_00000594",
+        "label": "txn_00000594",
+        "type": "transaction",
+        "ring_id": "ring_002",
+        "risk": 73.48
+      },
+      {
+        "id": "txn_00000658",
+        "label": "txn_00000658",
+        "type": "transaction",
+        "ring_id": "ring_002",
+        "risk": 142.1
+      },
+      {
+        "id": "txn_00001154",
+        "label": "txn_00001154",
+        "type": "transaction",
+        "ring_id": "ring_002",
+        "risk": 953.16
+      },
+      {
+        "id": "txn_00000756",
+        "label": "txn_00000756",
+        "type": "transaction",
+        "ring_id": "ring_001",
+        "risk": 39.23
+      },
+      {
+        "id": "txn_00001200",
+        "label": "txn_00001200",
+        "type": "transaction",
+        "ring_id": "ring_003",
+        "risk": 21.99
+      },
+      {
+        "id": "txn_00001237",
+        "label": "txn_00001237",
+        "type": "transaction",
+        "ring_id": "ring_001",
+        "risk": 49.64
+      },
+      {
+        "id": "txn_00001246",
+        "label": "txn_00001246",
+        "type": "transaction",
+        "ring_id": "ring_002",
+        "risk": 419.39
+      },
+      {
+        "id": "txn_00001408",
+        "label": "txn_00001408",
+        "type": "transaction",
+        "ring_id": "ring_001",
+        "risk": 71.41
+      },
+      {
+        "id": "txn_00000081",
+        "label": "txn_00000081",
+        "type": "transaction",
+        "ring_id": "ring_000",
+        "risk": 108.96
+      },
+      {
+        "id": "txn_00000083",
+        "label": "txn_00000083",
+        "type": "transaction",
+        "ring_id": "ring_003",
+        "risk": 84.46
+      },
+      {
+        "id": "txn_00000214",
+        "label": "txn_00000214",
+        "type": "transaction",
+        "ring_id": "ring_000",
+        "risk": 97.42
+      },
+      {
+        "id": "txn_00000273",
+        "label": "txn_00000273",
+        "type": "transaction",
+        "ring_id": "ring_002",
+        "risk": 84.6
+      },
+      {
+        "id": "txn_00000297",
+        "label": "txn_00000297",
+        "type": "transaction",
+        "ring_id": "ring_003",
+        "risk": 65.99
+      },
+      {
+        "id": "txn_00000341",
+        "label": "txn_00000341",
+        "type": "transaction",
+        "ring_id": "ring_000",
+        "risk": 53.87
+      },
+      {
+        "id": "txn_00000412",
+        "label": "txn_00000412",
+        "type": "transaction",
+        "ring_id": "ring_000",
+        "risk": 183.9
+      },
+      {
+        "id": "txn_00000418",
+        "label": "txn_00000418",
+        "type": "transaction",
+        "ring_id": "ring_001",
+        "risk": 38.74
+      },
+      {
+        "id": "txn_00000544",
+        "label": "txn_00000544",
+        "type": "transaction",
+        "ring_id": "ring_003",
+        "risk": 79.61
+      },
+      {
+        "id": "txn_00000660",
+        "label": "txn_00000660",
+        "type": "transaction",
+        "ring_id": "ring_002",
+        "risk": 110.45
+      },
+      {
+        "id": "txn_00000797",
+        "label": "txn_00000797",
+        "type": "transaction",
+        "ring_id": "ring_002",
+        "risk": 160.32
+      },
+      {
+        "id": "txn_00000900",
+        "label": "txn_00000900",
+        "type": "transaction",
+        "ring_id": "ring_000",
+        "risk": 129.6
+      },
+      {
+        "id": "txn_00001095",
+        "label": "txn_00001095",
+        "type": "transaction",
+        "ring_id": "ring_003",
+        "risk": 112.58
+      },
+      {
+        "id": "txn_00001105",
+        "label": "txn_00001105",
+        "type": "transaction",
+        "ring_id": "ring_002",
+        "risk": 122.59
+      },
+      {
+        "id": "txn_00001247",
+        "label": "txn_00001247",
+        "type": "transaction",
+        "ring_id": "ring_003",
+        "risk": 97.88
+      },
+      {
+        "id": "txn_00001467",
+        "label": "txn_00001467",
+        "type": "transaction",
+        "ring_id": "ring_000",
+        "risk": 159.85
+      },
+      {
+        "id": "txn_00000197",
+        "label": "txn_00000197",
+        "type": "transaction",
+        "ring_id": null,
+        "risk": 348.96
+      },
+      {
+        "id": "txn_00000222",
+        "label": "txn_00000222",
+        "type": "transaction",
+        "ring_id": null,
+        "risk": 44.51
+      },
+      {
+        "id": "txn_00000378",
+        "label": "txn_00000378",
+        "type": "transaction",
+        "ring_id": null,
+        "risk": 166.06
+      },
+      {
+        "id": "txn_00001364",
+        "label": "txn_00001364",
+        "type": "transaction",
+        "ring_id": null,
+        "risk": 43.37
+      },
+      {
+        "id": "txn_00000023",
+        "label": "txn_00000023",
+        "type": "transaction",
+        "ring_id": null,
+        "risk": 43.41
+      },
+      {
+        "id": "txn_00000028",
+        "label": "txn_00000028",
+        "type": "transaction",
+        "ring_id": null,
+        "risk": 187.06
+      },
+      {
+        "id": "txn_00000074",
+        "label": "txn_00000074",
+        "type": "transaction",
+        "ring_id": null,
+        "risk": 40.68
+      },
+      {
+        "id": "txn_00000096",
+        "label": "txn_00000096",
+        "type": "transaction",
+        "ring_id": null,
+        "risk": 120.73
+      },
+      {
+        "id": "pi_acct_000333_0",
+        "label": "pi_acct_000333_0",
+        "type": "payment_instrument",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "pi_acct_000039_0",
+        "label": "pi_acct_000039_0",
+        "type": "payment_instrument",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "pi_acct_000099_0",
+        "label": "pi_acct_000099_0",
+        "type": "payment_instrument",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "pi_acct_000160_0",
+        "label": "pi_acct_000160_0",
+        "type": "payment_instrument",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "pi_acct_000212_0",
+        "label": "pi_acct_000212_0",
+        "type": "payment_instrument",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "pi_acct_000280_0",
+        "label": "pi_acct_000280_0",
+        "type": "payment_instrument",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "pi_acct_000189_0",
+        "label": "pi_acct_000189_0",
+        "type": "payment_instrument",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "pi_acct_000239_0",
+        "label": "pi_acct_000239_0",
+        "type": "payment_instrument",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "pi_acct_000274_0",
+        "label": "pi_acct_000274_0",
+        "type": "payment_instrument",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "pi_acct_000332_0",
+        "label": "pi_acct_000332_0",
+        "type": "payment_instrument",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "pi_acct_000340_0",
+        "label": "pi_acct_000340_0",
+        "type": "payment_instrument",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "pi_acct_000062_0",
+        "label": "pi_acct_000062_0",
+        "type": "payment_instrument",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "pi_acct_000124_0",
+        "label": "pi_acct_000124_0",
+        "type": "payment_instrument",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "pi_acct_000148_0",
+        "label": "pi_acct_000148_0",
+        "type": "payment_instrument",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "pi_acct_000150_0",
+        "label": "pi_acct_000150_0",
+        "type": "payment_instrument",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "pi_acct_000206_0",
+        "label": "pi_acct_000206_0",
+        "type": "payment_instrument",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "pi_acct_000225_0",
+        "label": "pi_acct_000225_0",
+        "type": "payment_instrument",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "pi_acct_000255_0",
+        "label": "pi_acct_000255_0",
+        "type": "payment_instrument",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "pi_acct_000282_0",
+        "label": "pi_acct_000282_0",
+        "type": "payment_instrument",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "pi_acct_000285_0",
+        "label": "pi_acct_000285_0",
+        "type": "payment_instrument",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "pi_acct_000336_0",
+        "label": "pi_acct_000336_0",
+        "type": "payment_instrument",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "pi_acct_000000_0",
+        "label": "pi_acct_000000_0",
+        "type": "payment_instrument",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "ring_dev_003_4",
+        "label": "ring_dev_003_4",
+        "type": "device",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "dev_acct_000212_0",
+        "label": "dev_acct_000212_0",
+        "type": "device",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "dev_acct_000340_0",
+        "label": "dev_acct_000340_0",
+        "type": "device",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "ring_dev_000_1",
+        "label": "ring_dev_000_1",
+        "type": "device",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "dev_acct_000274_1",
+        "label": "dev_acct_000274_1",
+        "type": "device",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "dev_acct_000220_0",
+        "label": "dev_acct_000220_0",
+        "type": "device",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "dev_acct_000312_0",
+        "label": "dev_acct_000312_0",
+        "type": "device",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "dev_acct_000120_2",
+        "label": "dev_acct_000120_2",
+        "type": "device",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "dev_acct_000141_0",
+        "label": "dev_acct_000141_0",
+        "type": "device",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "ring_dev_002_3",
+        "label": "ring_dev_002_3",
+        "type": "device",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "dev_acct_000034_0",
+        "label": "dev_acct_000034_0",
+        "type": "device",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "dev_acct_000267_0",
+        "label": "dev_acct_000267_0",
+        "type": "device",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "dev_acct_000244_1",
+        "label": "dev_acct_000244_1",
+        "type": "device",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "dev_acct_000145_1",
+        "label": "dev_acct_000145_1",
+        "type": "device",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "dev_acct_000054_0",
+        "label": "dev_acct_000054_0",
+        "type": "device",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "dev_acct_000038_0",
+        "label": "dev_acct_000038_0",
+        "type": "device",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "dev_acct_000115_0",
+        "label": "dev_acct_000115_0",
+        "type": "device",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "dev_acct_000149_0",
+        "label": "dev_acct_000149_0",
+        "type": "device",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "ring_ip_000_1",
+        "label": "ring_ip_000_1",
+        "type": "ip_cluster",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "ring_ip_000_0",
+        "label": "ring_ip_000_0",
+        "type": "ip_cluster",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "ring_ip_003_1",
+        "label": "ring_ip_003_1",
+        "type": "ip_cluster",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "ip_NA_6658",
+        "label": "ip_NA_6658",
+        "type": "ip_cluster",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "ip_NA_6023",
+        "label": "ip_NA_6023",
+        "type": "ip_cluster",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "ip_LATAM_5325",
+        "label": "ip_LATAM_5325",
+        "type": "ip_cluster",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "ip_EU_8463",
+        "label": "ip_EU_8463",
+        "type": "ip_cluster",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "ip_NA_4398",
+        "label": "ip_NA_4398",
+        "type": "ip_cluster",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "ip_EU_6282",
+        "label": "ip_EU_6282",
+        "type": "ip_cluster",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "ip_NA_4740",
+        "label": "ip_NA_4740",
+        "type": "ip_cluster",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "ip_NA_3232",
+        "label": "ip_NA_3232",
+        "type": "ip_cluster",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "ip_EU_6520",
+        "label": "ip_EU_6520",
+        "type": "ip_cluster",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "ip_NA_1547",
+        "label": "ip_NA_1547",
+        "type": "ip_cluster",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "ip_NA_3419",
+        "label": "ip_NA_3419",
+        "type": "ip_cluster",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "ip_APAC_8790",
+        "label": "ip_APAC_8790",
+        "type": "ip_cluster",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "ring_ip_001_1",
+        "label": "ring_ip_001_1",
+        "type": "ip_cluster",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "refund_00000010",
+        "label": "refund_00000010",
+        "type": "refund",
+        "ring_id": "ring_000",
+        "risk": 58.18
+      },
+      {
+        "id": "refund_00000017",
+        "label": "refund_00000017",
+        "type": "refund",
+        "ring_id": "ring_001",
+        "risk": 26.64
+      },
+      {
+        "id": "refund_00000026",
+        "label": "refund_00000026",
+        "type": "refund",
+        "ring_id": "ring_001",
+        "risk": 65.5
+      },
+      {
+        "id": "refund_00000044",
+        "label": "refund_00000044",
+        "type": "refund",
+        "ring_id": "ring_002",
+        "risk": 48.74
+      },
+      {
+        "id": "refund_00000054",
+        "label": "refund_00000054",
+        "type": "refund",
+        "ring_id": "ring_003",
+        "risk": 53.68
+      },
+      {
+        "id": "refund_00000060",
+        "label": "refund_00000060",
+        "type": "refund",
+        "ring_id": "ring_002",
+        "risk": 25.72
+      },
+      {
+        "id": "refund_00000076",
+        "label": "refund_00000076",
+        "type": "refund",
+        "ring_id": "ring_001",
+        "risk": 18.44
+      },
+      {
+        "id": "refund_00000106",
+        "label": "refund_00000106",
+        "type": "refund",
+        "ring_id": "ring_002",
+        "risk": 447.99
+      },
+      {
+        "id": "refund_00000112",
+        "label": "refund_00000112",
+        "type": "refund",
+        "ring_id": "ring_001",
+        "risk": 20.96
+      },
+      {
+        "id": "refund_00000113",
+        "label": "refund_00000113",
+        "type": "refund",
+        "ring_id": "ring_001",
+        "risk": 35.24
+      },
+      {
+        "id": "chargeback_00000006",
+        "label": "chargeback_00000006",
+        "type": "chargeback",
+        "ring_id": "ring_002",
+        "risk": 58.72
+      },
+      {
+        "id": "chargeback_00000008",
+        "label": "chargeback_00000008",
+        "type": "chargeback",
+        "ring_id": "ring_002",
+        "risk": 142.1
+      },
+      {
+        "id": "chargeback_00000016",
+        "label": "chargeback_00000016",
+        "type": "chargeback",
+        "ring_id": "ring_002",
+        "risk": 953.16
+      },
+      {
+        "id": "chargeback_00000018",
+        "label": "chargeback_00000018",
+        "type": "chargeback",
+        "ring_id": "ring_003",
+        "risk": 21.99
+      },
+      {
+        "id": "chargeback_00000021",
+        "label": "chargeback_00000021",
+        "type": "chargeback",
+        "ring_id": "ring_002",
+        "risk": 419.39
+      },
+      {
+        "id": "chargeback_00000000",
+        "label": "chargeback_00000000",
+        "type": "chargeback",
+        "ring_id": null,
+        "risk": 50.62
+      },
+      {
+        "id": "chargeback_00000001",
+        "label": "chargeback_00000001",
+        "type": "chargeback",
+        "ring_id": null,
+        "risk": 914.23
+      },
+      {
+        "id": "chargeback_00000002",
+        "label": "chargeback_00000002",
+        "type": "chargeback",
+        "ring_id": null,
+        "risk": 348.96
+      },
+      {
+        "id": "dispute_00000001",
+        "label": "dispute_00000001",
+        "type": "dispute",
+        "ring_id": "ring_000",
+        "risk": 166.23
+      },
+      {
+        "id": "dispute_00000003",
+        "label": "dispute_00000003",
+        "type": "dispute",
+        "ring_id": "ring_001",
+        "risk": 45.15
+      },
+      {
+        "id": "dispute_00000006",
+        "label": "dispute_00000006",
+        "type": "dispute",
+        "ring_id": "ring_001",
+        "risk": 139.36
+      },
+      {
+        "id": "dispute_00000009",
+        "label": "dispute_00000009",
+        "type": "dispute",
+        "ring_id": "ring_002",
+        "risk": 58.72
+      },
+      {
+        "id": "dispute_00000010",
+        "label": "dispute_00000010",
+        "type": "dispute",
+        "ring_id": "ring_003",
+        "risk": 64.67
+      },
+      {
+        "id": "dispute_00000012",
+        "label": "dispute_00000012",
+        "type": "dispute",
+        "ring_id": "ring_002",
+        "risk": 73.48
+      },
+      {
+        "id": "support_00000000",
+        "label": "support_00000000",
+        "type": "support_contact",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "support_00000001",
+        "label": "support_00000001",
+        "type": "support_contact",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "support_00000002",
+        "label": "support_00000002",
+        "type": "support_contact",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "support_00000003",
+        "label": "support_00000003",
+        "type": "support_contact",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "acct_change_00000034",
+        "label": "acct_change_00000034",
+        "type": "account_change",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "acct_change_00000074",
+        "label": "acct_change_00000074",
+        "type": "account_change",
+        "ring_id": null,
+        "risk": null
+      },
+      {
+        "id": "acct_000283",
+        "label": "acct_000283",
+        "type": "account",
+        "ring_id": "ring_000",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000288",
+        "label": "acct_000288",
+        "type": "account",
+        "ring_id": "ring_001",
+        "risk": "medium"
+      },
+      {
+        "id": "acct_000292",
+        "label": "acct_000292",
+        "type": "account",
+        "ring_id": "ring_001",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000298",
+        "label": "acct_000298",
+        "type": "account",
+        "ring_id": "ring_002",
+        "risk": "medium"
+      },
+      {
+        "id": "acct_000301",
+        "label": "acct_000301",
+        "type": "account",
+        "ring_id": "ring_002",
+        "risk": "medium"
+      },
+      {
+        "id": "acct_000318",
+        "label": "acct_000318",
+        "type": "account",
+        "ring_id": "ring_002",
+        "risk": "medium"
+      },
+      {
+        "id": "acct_000320",
+        "label": "acct_000320",
+        "type": "account",
+        "ring_id": "ring_003",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000326",
+        "label": "acct_000326",
+        "type": "account",
+        "ring_id": "ring_000",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000339",
+        "label": "acct_000339",
+        "type": "account",
+        "ring_id": "ring_001",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000343",
+        "label": "acct_000343",
+        "type": "account",
+        "ring_id": "ring_001",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000345",
+        "label": "acct_000345",
+        "type": "account",
+        "ring_id": "ring_002",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000002",
+        "label": "acct_000002",
+        "type": "account",
+        "ring_id": "ring_002",
+        "risk": "medium"
+      },
+      {
+        "id": "acct_000003",
+        "label": "acct_000003",
+        "type": "account",
+        "ring_id": "ring_001",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000005",
+        "label": "acct_000005",
+        "type": "account",
+        "ring_id": "ring_001",
+        "risk": "medium"
+      },
+      {
+        "id": "acct_000011",
+        "label": "acct_000011",
+        "type": "account",
+        "ring_id": "ring_002",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000013",
+        "label": "acct_000013",
+        "type": "account",
+        "ring_id": "ring_000",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000021",
+        "label": "acct_000021",
+        "type": "account",
+        "ring_id": "ring_002",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000025",
+        "label": "acct_000025",
+        "type": "account",
+        "ring_id": "ring_003",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000027",
+        "label": "acct_000027",
+        "type": "account",
+        "ring_id": "ring_000",
+        "risk": "medium"
+      },
+      {
+        "id": "acct_000043",
+        "label": "acct_000043",
+        "type": "account",
+        "ring_id": "ring_000",
+        "risk": "medium"
+      },
+      {
+        "id": "acct_000053",
+        "label": "acct_000053",
+        "type": "account",
+        "ring_id": "ring_003",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000058",
+        "label": "acct_000058",
+        "type": "account",
+        "ring_id": "ring_001",
+        "risk": "medium"
+      },
+      {
+        "id": "acct_000064",
+        "label": "acct_000064",
+        "type": "account",
+        "ring_id": "ring_001",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000072",
+        "label": "acct_000072",
+        "type": "account",
+        "ring_id": "ring_001",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000080",
+        "label": "acct_000080",
+        "type": "account",
+        "ring_id": "ring_003",
+        "risk": "medium"
+      },
+      {
+        "id": "acct_000085",
+        "label": "acct_000085",
+        "type": "account",
+        "ring_id": "ring_001",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000086",
+        "label": "acct_000086",
+        "type": "account",
+        "ring_id": "ring_003",
+        "risk": "low"
+      },
+      {
+        "id": "acct_000087",
+        "label": "acct_000087",
+        "type": "account",
+        "ring_id": "ring_003",
+        "risk": "medium"
+      },
+      {
+        "id": "acct_000089",
+        "label": "acct_000089",
+        "type": "account",
+        "ring_id": "ring_000",
+        "risk": "medium"
+      },
+      {
+        "id": "acct_000091",
+        "label": "acct_000091",
+        "type": "account",
+        "ring_id": "ring_002",
+        "risk": "medium"
+      },
+      {
+        "id": "acct_000097",
+        "label": "acct_000097",
+        "type": "account",
+        "ring_id": "ring_001",
+        "risk": "medium"
+      }
+    ],
+    "edges": [
+      {
+        "source": "acct_000002",
+        "target": "ring_002",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000003",
+        "target": "ring_001",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000005",
+        "target": "ring_001",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000011",
+        "target": "ring_002",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000012",
+        "target": "ring_002",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000013",
+        "target": "ring_000",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000014",
+        "target": "ring_002",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000014",
+        "target": "merch_00006",
+        "type": "transacted-with"
+      },
+      {
+        "source": "acct_000014",
+        "target": "txn_00000273",
+        "type": "initiated-transaction"
+      },
+      {
+        "source": "acct_000016",
+        "target": "ring_003",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000018",
+        "target": "ring_003",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000018",
+        "target": "refund_00000054",
+        "type": "account-requested-refund"
+      },
+      {
+        "source": "acct_000018",
+        "target": "dispute_00000010",
+        "type": "account-opened-dispute"
+      },
+      {
+        "source": "acct_000020",
+        "target": "ring_003",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000020",
+        "target": "merch_00043",
+        "type": "transacted-with"
+      },
+      {
+        "source": "acct_000020",
+        "target": "txn_00000083",
+        "type": "initiated-transaction"
+      },
+      {
+        "source": "acct_000020",
+        "target": "txn_00001247",
+        "type": "initiated-transaction"
+      },
+      {
+        "source": "acct_000020",
+        "target": "ring_dev_003_4",
+        "type": "used-device"
+      },
+      {
+        "source": "acct_000021",
+        "target": "ring_002",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000025",
+        "target": "ring_003",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000027",
+        "target": "ring_000",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000030",
+        "target": "ring_003",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000031",
+        "target": "ring_003",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000035",
+        "target": "ring_001",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000037",
+        "target": "ring_000",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000040",
+        "target": "ring_000",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000043",
+        "target": "ring_000",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000046",
+        "target": "ring_002",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000052",
+        "target": "ring_000",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000052",
+        "target": "txn_00000214",
+        "type": "initiated-transaction"
+      },
+      {
+        "source": "acct_000052",
+        "target": "ring_ip_000_1",
+        "type": "used-ip-cluster"
+      },
+      {
+        "source": "acct_000053",
+        "target": "ring_003",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000058",
+        "target": "ring_001",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000063",
+        "target": "ring_001",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000063",
+        "target": "merch_00043",
+        "type": "transacted-with"
+      },
+      {
+        "source": "acct_000063",
+        "target": "txn_00000277",
+        "type": "initiated-transaction"
+      },
+      {
+        "source": "acct_000063",
+        "target": "ring_ip_001_1",
+        "type": "used-ip-cluster"
+      },
+      {
+        "source": "acct_000063",
+        "target": "refund_00000026",
+        "type": "account-requested-refund"
+      },
+      {
+        "source": "acct_000063",
+        "target": "dispute_00000006",
+        "type": "account-opened-dispute"
+      },
+      {
+        "source": "acct_000064",
+        "target": "ring_001",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000068",
+        "target": "ring_002",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000068",
+        "target": "refund_00000044",
+        "type": "account-requested-refund"
+      },
+      {
+        "source": "acct_000068",
+        "target": "chargeback_00000006",
+        "type": "account-filed-chargeback"
+      },
+      {
+        "source": "acct_000068",
+        "target": "dispute_00000009",
+        "type": "account-opened-dispute"
+      },
+      {
+        "source": "acct_000072",
+        "target": "ring_001",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000074",
+        "target": "ring_003",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000074",
+        "target": "txn_00001095",
+        "type": "initiated-transaction"
+      },
+      {
+        "source": "acct_000074",
+        "target": "ring_dev_003_4",
+        "type": "used-device"
+      },
+      {
+        "source": "acct_000074",
+        "target": "ring_ip_003_1",
+        "type": "used-ip-cluster"
+      },
+      {
+        "source": "acct_000074",
+        "target": "acct_change_00000074",
+        "type": "account-change"
+      },
+      {
+        "source": "acct_000077",
+        "target": "ring_003",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000080",
+        "target": "ring_003",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000081",
+        "target": "ring_001",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000085",
+        "target": "ring_001",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000086",
+        "target": "ring_003",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000087",
+        "target": "ring_003",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000089",
+        "target": "ring_000",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000091",
+        "target": "ring_002",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000096",
+        "target": "ring_002",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000096",
+        "target": "txn_00001246",
+        "type": "initiated-transaction"
+      },
+      {
+        "source": "acct_000096",
+        "target": "chargeback_00000021",
+        "type": "account-filed-chargeback"
+      },
+      {
+        "source": "acct_000097",
+        "target": "ring_001",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000100",
+        "target": "ring_002",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000101",
+        "target": "ring_003",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000101",
+        "target": "merch_00043",
+        "type": "transacted-with"
+      },
+      {
+        "source": "acct_000101",
+        "target": "txn_00000297",
+        "type": "initiated-transaction"
+      },
+      {
+        "source": "acct_000113",
+        "target": "ring_003",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000119",
+        "target": "ring_003",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000120",
+        "target": "ring_000",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000120",
+        "target": "merch_00000",
+        "type": "transacted-with"
+      },
+      {
+        "source": "acct_000120",
+        "target": "txn_00000412",
+        "type": "initiated-transaction"
+      },
+      {
+        "source": "acct_000120",
+        "target": "dev_acct_000120_2",
+        "type": "used-device"
+      },
+      {
+        "source": "acct_000120",
+        "target": "ring_ip_000_0",
+        "type": "used-ip-cluster"
+      },
+      {
+        "source": "acct_000125",
+        "target": "ring_003",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000128",
+        "target": "ring_003",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000137",
+        "target": "ring_002",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000140",
+        "target": "ring_001",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000140",
+        "target": "merch_00007",
+        "type": "transacted-with"
+      },
+      {
+        "source": "acct_000140",
+        "target": "txn_00000756",
+        "type": "initiated-transaction"
+      },
+      {
+        "source": "acct_000140",
+        "target": "ring_ip_001_1",
+        "type": "used-ip-cluster"
+      },
+      {
+        "source": "acct_000140",
+        "target": "merch_00026",
+        "type": "transacted-with"
+      },
+      {
+        "source": "acct_000140",
+        "target": "txn_00001408",
+        "type": "initiated-transaction"
+      },
+      {
+        "source": "acct_000140",
+        "target": "refund_00000076",
+        "type": "account-requested-refund"
+      },
+      {
+        "source": "acct_000140",
+        "target": "refund_00000112",
+        "type": "account-requested-refund"
+      },
+      {
+        "source": "acct_000144",
+        "target": "ring_000",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000144",
+        "target": "merch_00000",
+        "type": "transacted-with"
+      },
+      {
+        "source": "acct_000144",
+        "target": "txn_00000900",
+        "type": "initiated-transaction"
+      },
+      {
+        "source": "acct_000156",
+        "target": "ring_003",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000159",
+        "target": "ring_002",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000161",
+        "target": "ring_000",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000161",
+        "target": "txn_00000081",
+        "type": "initiated-transaction"
+      },
+      {
+        "source": "acct_000175",
+        "target": "ring_000",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000180",
+        "target": "ring_003",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000185",
+        "target": "ring_003",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000191",
+        "target": "ring_002",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000191",
+        "target": "txn_00000594",
+        "type": "initiated-transaction"
+      },
+      {
+        "source": "acct_000191",
+        "target": "refund_00000060",
+        "type": "account-requested-refund"
+      },
+      {
+        "source": "acct_000191",
+        "target": "dispute_00000012",
+        "type": "account-opened-dispute"
+      },
+      {
+        "source": "acct_000191",
+        "target": "case_00003_acct_000191",
+        "type": "case-account"
+      },
+      {
+        "source": "acct_000195",
+        "target": "ring_000",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000195",
+        "target": "txn_00001467",
+        "type": "initiated-transaction"
+      },
+      {
+        "source": "acct_000195",
+        "target": "ring_ip_000_0",
+        "type": "used-ip-cluster"
+      },
+      {
+        "source": "acct_000199",
+        "target": "ring_001",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000203",
+        "target": "ring_003",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000207",
+        "target": "ring_000",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000222",
+        "target": "ring_002",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000222",
+        "target": "txn_00000658",
+        "type": "initiated-transaction"
+      },
+      {
+        "source": "acct_000222",
+        "target": "ring_dev_002_3",
+        "type": "used-device"
+      },
+      {
+        "source": "acct_000222",
+        "target": "chargeback_00000008",
+        "type": "account-filed-chargeback"
+      },
+      {
+        "source": "acct_000228",
+        "target": "ring_000",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000228",
+        "target": "txn_00000341",
+        "type": "initiated-transaction"
+      },
+      {
+        "source": "acct_000228",
+        "target": "ring_dev_000_1",
+        "type": "used-device"
+      },
+      {
+        "source": "acct_000228",
+        "target": "ring_ip_000_1",
+        "type": "used-ip-cluster"
+      },
+      {
+        "source": "acct_000258",
+        "target": "ring_002",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000258",
+        "target": "merch_00042",
+        "type": "transacted-with"
+      },
+      {
+        "source": "acct_000258",
+        "target": "txn_00001154",
+        "type": "initiated-transaction"
+      },
+      {
+        "source": "acct_000258",
+        "target": "refund_00000106",
+        "type": "account-requested-refund"
+      },
+      {
+        "source": "acct_000258",
+        "target": "chargeback_00000016",
+        "type": "account-filed-chargeback"
+      },
+      {
+        "source": "acct_000260",
+        "target": "ring_003",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000260",
+        "target": "txn_00000544",
+        "type": "initiated-transaction"
+      },
+      {
+        "source": "acct_000266",
+        "target": "ring_001",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000268",
+        "target": "ring_002",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000268",
+        "target": "merch_00006",
+        "type": "transacted-with"
+      },
+      {
+        "source": "acct_000268",
+        "target": "txn_00001105",
+        "type": "initiated-transaction"
+      },
+      {
+        "source": "acct_000275",
+        "target": "ring_001",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000275",
+        "target": "merch_00012",
+        "type": "transacted-with"
+      },
+      {
+        "source": "acct_000275",
+        "target": "txn_00000418",
+        "type": "initiated-transaction"
+      },
+      {
+        "source": "acct_000283",
+        "target": "ring_000",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000288",
+        "target": "ring_001",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000292",
+        "target": "ring_001",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000298",
+        "target": "ring_002",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000300",
+        "target": "ring_000",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000300",
+        "target": "merch_00026",
+        "type": "transacted-with"
+      },
+      {
+        "source": "acct_000300",
+        "target": "txn_00000124",
+        "type": "initiated-transaction"
+      },
+      {
+        "source": "acct_000300",
+        "target": "ring_dev_000_1",
+        "type": "used-device"
+      },
+      {
+        "source": "acct_000300",
+        "target": "ring_ip_000_1",
+        "type": "used-ip-cluster"
+      },
+      {
+        "source": "acct_000300",
+        "target": "refund_00000010",
+        "type": "account-requested-refund"
+      },
+      {
+        "source": "acct_000300",
+        "target": "dispute_00000001",
+        "type": "account-opened-dispute"
+      },
+      {
+        "source": "acct_000300",
+        "target": "case_00006_acct_000300",
+        "type": "case-account"
+      },
+      {
+        "source": "acct_000301",
+        "target": "ring_002",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000304",
+        "target": "ring_002",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000304",
+        "target": "merch_00018",
+        "type": "transacted-with"
+      },
+      {
+        "source": "acct_000304",
+        "target": "txn_00000660",
+        "type": "initiated-transaction"
+      },
+      {
+        "source": "acct_000304",
+        "target": "ring_dev_002_3",
+        "type": "used-device"
+      },
+      {
+        "source": "acct_000315",
+        "target": "ring_003",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000315",
+        "target": "merch_00021",
+        "type": "transacted-with"
+      },
+      {
+        "source": "acct_000315",
+        "target": "txn_00001200",
+        "type": "initiated-transaction"
+      },
+      {
+        "source": "acct_000315",
+        "target": "ring_ip_003_1",
+        "type": "used-ip-cluster"
+      },
+      {
+        "source": "acct_000315",
+        "target": "chargeback_00000018",
+        "type": "account-filed-chargeback"
+      },
+      {
+        "source": "acct_000317",
+        "target": "ring_002",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000318",
+        "target": "ring_002",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000320",
+        "target": "ring_003",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000322",
+        "target": "ring_002",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000322",
+        "target": "merch_00018",
+        "type": "transacted-with"
+      },
+      {
+        "source": "acct_000322",
+        "target": "txn_00000797",
+        "type": "initiated-transaction"
+      },
+      {
+        "source": "acct_000325",
+        "target": "ring_001",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000325",
+        "target": "merch_00013",
+        "type": "transacted-with"
+      },
+      {
+        "source": "acct_000325",
+        "target": "txn_00001237",
+        "type": "initiated-transaction"
+      },
+      {
+        "source": "acct_000325",
+        "target": "refund_00000113",
+        "type": "account-requested-refund"
+      },
+      {
+        "source": "acct_000326",
+        "target": "ring_000",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000328",
+        "target": "ring_001",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000330",
+        "target": "ring_001",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000330",
+        "target": "refund_00000017",
+        "type": "account-requested-refund"
+      },
+      {
+        "source": "acct_000330",
+        "target": "dispute_00000003",
+        "type": "account-opened-dispute"
+      },
+      {
+        "source": "acct_000339",
+        "target": "ring_001",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000343",
+        "target": "ring_001",
+        "type": "ring-member"
+      },
+      {
+        "source": "acct_000345",
+        "target": "ring_002",
+        "type": "ring-member"
+      },
+      {
+        "source": "merch_00000",
+        "target": "ring_000",
+        "type": "ring-merchant"
+      },
+      {
+        "source": "merch_00000",
+        "target": "txn_00000412",
+        "type": "transaction-at-merchant"
+      },
+      {
+        "source": "merch_00000",
+        "target": "txn_00000900",
+        "type": "transaction-at-merchant"
+      },
+      {
+        "source": "merch_00006",
+        "target": "ring_002",
+        "type": "ring-merchant"
+      },
+      {
+        "source": "merch_00006",
+        "target": "txn_00000273",
+        "type": "transaction-at-merchant"
+      },
+      {
+        "source": "merch_00006",
+        "target": "txn_00001105",
+        "type": "transaction-at-merchant"
+      },
+      {
+        "source": "merch_00007",
+        "target": "txn_00000756",
+        "type": "transaction-at-merchant"
+      },
+      {
+        "source": "merch_00012",
+        "target": "ring_001",
+        "type": "ring-merchant"
+      },
+      {
+        "source": "merch_00012",
+        "target": "txn_00000197",
+        "type": "transaction-at-merchant"
+      },
+      {
+        "source": "merch_00012",
+        "target": "txn_00000418",
+        "type": "transaction-at-merchant"
+      },
+      {
+        "source": "merch_00013",
+        "target": "txn_00001237",
+        "type": "transaction-at-merchant"
+      },
+      {
+        "source": "merch_00018",
+        "target": "ring_002",
+        "type": "ring-merchant"
+      },
+      {
+        "source": "merch_00018",
+        "target": "txn_00000660",
+        "type": "transaction-at-merchant"
+      },
+      {
+        "source": "merch_00018",
+        "target": "txn_00000797",
+        "type": "transaction-at-merchant"
+      },
+      {
+        "source": "merch_00019",
+        "target": "txn_00000023",
+        "type": "transaction-at-merchant"
+      },
+      {
+        "source": "merch_00019",
+        "target": "txn_00000028",
+        "type": "transaction-at-merchant"
+      },
+      {
+        "source": "merch_00020",
+        "target": "ring_001",
+        "type": "ring-merchant"
+      },
+      {
+        "source": "merch_00021",
+        "target": "ring_001",
+        "type": "ring-merchant"
+      },
+      {
+        "source": "merch_00021",
+        "target": "txn_00001200",
+        "type": "transaction-at-merchant"
+      },
+      {
+        "source": "merch_00022",
+        "target": "ring_001",
+        "type": "ring-merchant"
+      },
+      {
+        "source": "merch_00024",
+        "target": "ring_000",
+        "type": "ring-merchant"
+      },
+      {
+        "source": "merch_00026",
+        "target": "ring_002",
+        "type": "ring-merchant"
+      },
+      {
+        "source": "merch_00026",
+        "target": "txn_00000096",
+        "type": "transaction-at-merchant"
+      },
+      {
+        "source": "merch_00026",
+        "target": "txn_00000124",
+        "type": "transaction-at-merchant"
+      },
+      {
+        "source": "merch_00026",
+        "target": "txn_00001408",
+        "type": "transaction-at-merchant"
+      },
+      {
+        "source": "merch_00031",
+        "target": "ring_000",
+        "type": "ring-merchant"
+      },
+      {
+        "source": "merch_00031",
+        "target": "ring_002",
+        "type": "ring-merchant"
+      },
+      {
+        "source": "merch_00031",
+        "target": "txn_00000074",
+        "type": "transaction-at-merchant"
+      },
+      {
+        "source": "merch_00042",
+        "target": "ring_002",
+        "type": "ring-merchant"
+      },
+      {
+        "source": "merch_00042",
+        "target": "txn_00001154",
+        "type": "transaction-at-merchant"
+      },
+      {
+        "source": "merch_00043",
+        "target": "ring_003",
+        "type": "ring-merchant"
+      },
+      {
+        "source": "merch_00043",
+        "target": "txn_00000083",
+        "type": "transaction-at-merchant"
+      },
+      {
+        "source": "merch_00043",
+        "target": "txn_00000277",
+        "type": "transaction-at-merchant"
+      },
+      {
+        "source": "merch_00043",
+        "target": "txn_00000297",
+        "type": "transaction-at-merchant"
+      },
+      {
+        "source": "pi_acct_000255_0",
+        "target": "txn_00000074",
+        "type": "transaction-used-payment"
+      },
+      {
+        "source": "pi_acct_000280_0",
+        "target": "txn_00001364",
+        "type": "transaction-used-payment"
+      },
+      {
+        "source": "pi_acct_000332_0",
+        "target": "txn_00000028",
+        "type": "transaction-used-payment"
+      },
+      {
+        "source": "txn_00000023",
+        "target": "support_00000003",
+        "type": "support-linked-transaction"
+      },
+      {
+        "source": "txn_00000124",
+        "target": "refund_00000010",
+        "type": "transaction-refunded"
+      },
+      {
+        "source": "txn_00000124",
+        "target": "dispute_00000001",
+        "type": "transaction-disputed"
+      },
+      {
+        "source": "txn_00000197",
+        "target": "chargeback_00000002",
+        "type": "transaction-chargeback"
+      },
+      {
+        "source": "txn_00000277",
+        "target": "refund_00000026",
+        "type": "transaction-refunded"
+      },
+      {
+        "source": "txn_00000277",
+        "target": "dispute_00000006",
+        "type": "transaction-disputed"
+      },
+      {
+        "source": "txn_00000594",
+        "target": "refund_00000060",
+        "type": "transaction-refunded"
+      },
+      {
+        "source": "txn_00000594",
+        "target": "dispute_00000012",
+        "type": "transaction-disputed"
+      },
+      {
+        "source": "txn_00000658",
+        "target": "chargeback_00000008",
+        "type": "transaction-chargeback"
+      },
+      {
+        "source": "txn_00000756",
+        "target": "refund_00000076",
+        "type": "transaction-refunded"
+      },
+      {
+        "source": "ring_dev_003_4",
+        "target": "acct_change_00000074",
+        "type": "change-device"
+      },
+      {
+        "source": "ring_ip_003_1",
+        "target": "acct_change_00000074",
+        "type": "change-ip"
+      },
+      {
+        "source": "txn_00001154",
+        "target": "refund_00000106",
+        "type": "transaction-refunded"
+      },
+      {
+        "source": "txn_00001154",
+        "target": "chargeback_00000016",
+        "type": "transaction-chargeback"
+      },
+      {
+        "source": "txn_00001200",
+        "target": "chargeback_00000018",
+        "type": "transaction-chargeback"
+      },
+      {
+        "source": "txn_00001237",
+        "target": "refund_00000113",
+        "type": "transaction-refunded"
+      },
+      {
+        "source": "txn_00001246",
+        "target": "chargeback_00000021",
+        "type": "transaction-chargeback"
+      },
+      {
+        "source": "dev_acct_000034_0",
+        "target": "acct_change_00000034",
+        "type": "change-device"
+      }
+    ]
+  },
+  "defense_comparison": [
+    {
+      "defense": "rules_baseline",
+      "precision": 0.5,
+      "recall": 0.0417,
+      "alerts": 2.0,
+      "ring_level_recall": 0.0
+    },
+    {
+      "defense": "supervised_transaction_model",
+      "precision": 0.6216,
+      "recall": 0.9583,
+      "alerts": 37.0,
+      "ring_level_recall": 1.0
+    },
+    {
+      "defense": "graph_feature_model",
+      "precision": 0.2857,
+      "recall": 0.0833,
+      "alerts": 7.0,
+      "ring_level_recall": 0.0
+    }
+  ],
+  "recommendation": "graph_feature_model + ring_priority investigation",
+  "persistence": {
+    "sqlite_path": "fraudwar.sqlite"
+  },
+  "report": {
+    "title": "Fraud After-Action Report",
+    "disclaimer": "FraudWar Room uses synthetic data and abstract adversarial behavior for defensive research, analytics, and portfolio demonstration. It is not a guide to committing fraud and must not be used to facilitate abuse.",
+    "run_id": "run_static_vs_adaptive_42",
+    "executive_summary": {
+      "recommended_defense": "graph_feature_model + ring_priority investigation",
+      "net_fraud_loss": 3527.1,
+      "prevented_loss": 239.71,
+      "false_positive_cost": 120.0,
+      "investigator_roi": -42.2,
+      "adversarial_half_life": 3.25,
+      "top_risk": "adaptive recall decay under investigator capacity constraints"
+    },
+    "defense_comparison": [
+      {
+        "defense": "rules_baseline",
+        "precision": 0.5,
+        "recall": 0.0417,
+        "alerts": 2.0,
+        "ring_level_recall": 0.0
+      },
+      {
+        "defense": "supervised_transaction_model",
+        "precision": 0.6216,
+        "recall": 0.9583,
+        "alerts": 37.0,
+        "ring_level_recall": 1.0
+      },
+      {
+        "defense": "graph_feature_model",
+        "precision": 0.2857,
+        "recall": 0.0833,
+        "alerts": 7.0,
+        "ring_level_recall": 0.0
+      }
+    ],
+    "entity_coverage": {
+      "customers": 350,
+      "accounts": 350,
+      "payment_instruments": 517,
+      "devices": 385,
+      "ip_clusters": 1450,
+      "merchant_categories": 9,
+      "merchants": 45,
+      "transactions": 1500,
+      "refunds": 144,
+      "chargebacks": 26,
+      "disputes": 35,
+      "support_contacts": 93,
+      "account_changes": 20
+    },
+    "active_rings": [
+      {
+        "ring_id": "ring_000",
+        "ring_type": "mule_network",
+        "start_day": 8,
+        "active": true,
+        "adaptation_strategy": "reduce_attention",
+        "members": [
+          "acct_000175",
+          "acct_000013",
+          "acct_000337",
+          "acct_000043",
+          "acct_000195",
+          "acct_000161",
+          "acct_000283",
+          "acct_000120",
+          "acct_000040",
+          "acct_000207",
+          "acct_000027",
+          "acct_000037",
+          "acct_000300",
+          "acct_000089",
+          "acct_000144",
+          "acct_000052",
+          "acct_000326",
+          "acct_000228",
+          "acct_000272"
+        ],
+        "merchants": [
+          "merch_00000",
+          "merch_00011",
+          "merch_00024",
+          "merch_00031"
+        ],
+        "shared_devices": [
+          "ring_dev_000_0",
+          "ring_dev_000_1",
+          "ring_dev_000_2",
+          "ring_dev_000_3"
+        ],
+        "shared_ip_clusters": [
+          "ring_ip_000_0",
+          "ring_ip_000_1",
+          "ring_ip_000_2"
+        ],
+        "detected": false,
+        "disrupted": false,
+        "velocity_multiplier": 0.82,
+        "amount_multiplier": 1.0,
+        "refund_multiplier": 1.0,
+        "shared_infra_multiplier": 1.0,
+        "detection_memory": [
+          "day 20: 1 reviewed synthetic cases"
+        ]
+      },
+      {
+        "ring_id": "ring_001",
+        "ring_type": "refund_abuse_ring",
+        "start_day": 7,
+        "active": true,
+        "adaptation_strategy": "reduce_attention",
+        "members": [
+          "acct_000325",
+          "acct_000292",
+          "acct_000234",
+          "acct_000163",
+          "acct_000343",
+          "acct_000259",
+          "acct_000140",
+          "acct_000005",
+          "acct_000003",
+          "acct_000275",
+          "acct_000266",
+          "acct_000126",
+          "acct_000314",
+          "acct_000118",
+          "acct_000097",
+          "acct_000339",
+          "acct_000328",
+          "acct_000058",
+          "acct_000288",
+          "acct_000122",
+          "acct_000063",
+          "acct_000081",
+          "acct_000330",
+          "acct_000121",
+          "acct_000344",
+          "acct_000072",
+          "acct_000232",
+          "acct_000199",
+          "acct_000085",
+          "acct_000064",
+          "acct_000035"
+        ],
+        "merchants": [
+          "merch_00016",
+          "merch_00021",
+          "merch_00040",
+          "merch_00022",
+          "merch_00012",
+          "merch_00020"
+        ],
+        "shared_devices": [
+          "ring_dev_001_0",
+          "ring_dev_001_1",
+          "ring_dev_001_2",
+          "ring_dev_001_3"
+        ],
+        "shared_ip_clusters": [
+          "ring_ip_001_0",
+          "ring_ip_001_1"
+        ],
+        "detected": false,
+        "disrupted": false,
+        "velocity_multiplier": 1.0,
+        "amount_multiplier": 1.0,
+        "refund_multiplier": 1.0,
+        "shared_infra_multiplier": 1.0,
+        "detection_memory": []
+      },
+      {
+        "ring_id": "ring_002",
+        "ring_type": "account_takeover_cluster",
+        "start_day": 3,
+        "active": true,
+        "adaptation_strategy": "reduce_attention",
+        "members": [
+          "acct_000250",
+          "acct_000021",
+          "acct_000301",
+          "acct_000014",
+          "acct_000317",
+          "acct_000188",
+          "acct_000011",
+          "acct_000105",
+          "acct_000012",
+          "acct_000159",
+          "acct_000223",
+          "acct_000068",
+          "acct_000100",
+          "acct_000222",
+          "acct_000240",
+          "acct_000157",
+          "acct_000258",
+          "acct_000229",
+          "acct_000091",
+          "acct_000276",
+          "acct_000132",
+          "acct_000304",
+          "acct_000322",
+          "acct_000191",
+          "acct_000273",
+          "acct_000268",
+          "acct_000135",
+          "acct_000218",
+          "acct_000002",
+          "acct_000298",
+          "acct_000154",
+          "acct_000046",
+          "acct_000345",
+          "acct_000096",
+          "acct_000318",
+          "acct_000137"
+        ],
+        "merchants": [
+          "merch_00031",
+          "merch_00004",
+          "merch_00026",
+          "merch_00006",
+          "merch_00018",
+          "merch_00042",
+          "merch_00008"
+        ],
+        "shared_devices": [
+          "ring_dev_002_0",
+          "ring_dev_002_1",
+          "ring_dev_002_2",
+          "ring_dev_002_3"
+        ],
+        "shared_ip_clusters": [
+          "ring_ip_002_0"
+        ],
+        "detected": false,
+        "disrupted": false,
+        "velocity_multiplier": 1.0,
+        "amount_multiplier": 1.0,
+        "refund_multiplier": 1.0,
+        "shared_infra_multiplier": 1.0,
+        "detection_memory": [
+          "day 20: 1 reviewed synthetic cases"
+        ]
+      },
+      {
+        "ring_id": "ring_003",
+        "ring_type": "synthetic_identity_ring",
+        "start_day": 6,
+        "active": true,
+        "adaptation_strategy": "slow_burn",
+        "members": [
+          "acct_000155",
+          "acct_000246",
+          "acct_000252",
+          "acct_000198",
+          "acct_000053",
+          "acct_000260",
+          "acct_000315",
+          "acct_000016",
+          "acct_000320",
+          "acct_000020",
+          "acct_000074",
+          "acct_000281",
+          "acct_000152",
+          "acct_000237",
+          "acct_000190",
+          "acct_000290",
+          "acct_000087",
+          "acct_000086",
+          "acct_000098",
+          "acct_000321",
+          "acct_000030",
+          "acct_000018",
+          "acct_000203",
+          "acct_000119",
+          "acct_000128",
+          "acct_000180",
+          "acct_000249",
+          "acct_000077",
+          "acct_000142",
+          "acct_000125",
+          "acct_000185",
+          "acct_000101",
+          "acct_000080",
+          "acct_000025",
+          "acct_000031",
+          "acct_000156",
+          "acct_000174",
+          "acct_000113"
+        ],
+        "merchants": [
+          "merch_00043",
+          "merch_00005",
+          "merch_00001"
+        ],
+        "shared_devices": [
+          "ring_dev_003_0",
+          "ring_dev_003_1",
+          "ring_dev_003_2",
+          "ring_dev_003_3",
+          "ring_dev_003_4",
+          "ring_dev_003_5"
+        ],
+        "shared_ip_clusters": [
+          "ring_ip_003_0",
+          "ring_ip_003_1"
+        ],
+        "detected": false,
+        "disrupted": false,
+        "velocity_multiplier": 1.0,
+        "amount_multiplier": 1.0,
+        "refund_multiplier": 1.0,
+        "shared_infra_multiplier": 1.0,
+        "detection_memory": []
+      }
+    ],
+    "battlefield_timeline": [
+      {
+        "day": 3,
+        "type": "ring_emergence",
+        "title": "ring_002 emerged",
+        "detail": "account_takeover_cluster entered the synthetic network"
+      },
+      {
+        "day": 6,
+        "type": "ring_emergence",
+        "title": "ring_003 emerged",
+        "detail": "synthetic_identity_ring entered the synthetic network"
+      },
+      {
+        "day": 7,
+        "type": "ring_emergence",
+        "title": "ring_001 emerged",
+        "detail": "refund_abuse_ring entered the synthetic network"
+      },
+      {
+        "day": 8,
+        "type": "ring_emergence",
+        "title": "ring_000 emerged",
+        "detail": "mule_network entered the synthetic network"
+      },
+      {
+        "day": 12,
+        "type": "detection",
+        "title": "acct_000048 alerted",
+        "detail": "graph_model account risk score"
+      },
+      {
+        "day": 12,
+        "type": "detection",
+        "title": "acct_000191 alerted",
+        "detail": "graph_model account risk score"
+      },
+      {
+        "day": 14,
+        "type": "detection",
+        "title": "acct_000173 alerted",
+        "detail": "graph_model account risk score"
+      },
+      {
+        "day": 16,
+        "type": "detection",
+        "title": "acct_000192 alerted",
+        "detail": "graph_model account risk score"
+      },
+      {
+        "day": 18,
+        "type": "detection",
+        "title": "acct_000034 alerted",
+        "detail": "graph_model account risk score"
+      },
+      {
+        "day": 18,
+        "type": "detection",
+        "title": "acct_000300 alerted",
+        "detail": "graph_model account risk score"
+      },
+      {
+        "day": 19,
+        "type": "detection",
+        "title": "acct_000279 alerted",
+        "detail": "graph_model account risk score"
+      },
+      {
+        "day": 20,
+        "type": "adaptation",
+        "title": "ring_000 adapted",
+        "detail": "lower_velocity"
+      },
+      {
+        "day": 20,
+        "type": "adaptation",
+        "title": "ring_002 adapted",
+        "detail": "split_cluster"
+      }
+    ],
+    "case_queue": {
+      "total_sampled_cases": 7,
+      "top_cases": [
+        {
+          "case_id": "case_00003_acct_000191",
+          "day_opened": 12,
+          "alert_ids": [
+            "alert_graph_model_acct_000191"
+          ],
+          "account_ids": [
+            "acct_000191"
+          ],
+          "merchant_ids": [],
+          "ring_id": "ring_002",
+          "priority_score": 0.9866,
+          "dollar_exposure": 73.48,
+          "false_positive_risk": 0.2134,
+          "recommended_action": "link to ring and escalate synthetic disruption review",
+          "status": "reviewed",
+          "investigator_id": "inv_00",
+          "review_hours": 0.75,
+          "notes": "Synthetic evidence bundle generated for defensive simulation."
+        },
+        {
+          "case_id": "case_00001_acct_000048",
+          "day_opened": 12,
+          "alert_ids": [
+            "alert_graph_model_acct_000048"
+          ],
+          "account_ids": [
+            "acct_000048"
+          ],
+          "merchant_ids": [],
+          "ring_id": null,
+          "priority_score": 0.9673,
+          "dollar_exposure": 186.37,
+          "false_positive_risk": 0.0327,
+          "recommended_action": "hold transaction/account for synthetic investigator review",
+          "status": "reviewed",
+          "investigator_id": "inv_01",
+          "review_hours": 0.75,
+          "notes": "Synthetic evidence bundle generated for defensive simulation."
+        },
+        {
+          "case_id": "case_00002_acct_000173",
+          "day_opened": 14,
+          "alert_ids": [
+            "alert_graph_model_acct_000173"
+          ],
+          "account_ids": [
+            "acct_000173"
+          ],
+          "merchant_ids": [],
+          "ring_id": null,
+          "priority_score": 0.9248,
+          "dollar_exposure": 487.01,
+          "false_positive_risk": 0.0752,
+          "recommended_action": "hold transaction/account for synthetic investigator review",
+          "status": "reviewed",
+          "investigator_id": "inv_02",
+          "review_hours": 0.75,
+          "notes": "Synthetic evidence bundle generated for defensive simulation."
+        },
+        {
+          "case_id": "case_00004_acct_000192",
+          "day_opened": 16,
+          "alert_ids": [
+            "alert_graph_model_acct_000192"
+          ],
+          "account_ids": [
+            "acct_000192"
+          ],
+          "merchant_ids": [],
+          "ring_id": null,
+          "priority_score": 0.9248,
+          "dollar_exposure": 340.05,
+          "false_positive_risk": 0.0752,
+          "recommended_action": "hold transaction/account for synthetic investigator review",
+          "status": "reviewed",
+          "investigator_id": "inv_03",
+          "review_hours": 0.75,
+          "notes": "Synthetic evidence bundle generated for defensive simulation."
+        },
+        {
+          "case_id": "case_00000_acct_000034",
+          "day_opened": 18,
+          "alert_ids": [
+            "alert_graph_model_acct_000034"
+          ],
+          "account_ids": [
+            "acct_000034"
+          ],
+          "merchant_ids": [],
+          "ring_id": null,
+          "priority_score": 0.9248,
+          "dollar_exposure": 271.33,
+          "false_positive_risk": 0.0752,
+          "recommended_action": "hold transaction/account for synthetic investigator review",
+          "status": "reviewed",
+          "investigator_id": "inv_00",
+          "review_hours": 0.75,
+          "notes": "Synthetic evidence bundle generated for defensive simulation."
+        },
+        {
+          "case_id": "case_00006_acct_000300",
+          "day_opened": 18,
+          "alert_ids": [
+            "alert_graph_model_acct_000300"
+          ],
+          "account_ids": [
+            "acct_000300"
+          ],
+          "merchant_ids": [],
+          "ring_id": "ring_000",
+          "priority_score": 0.71,
+          "dollar_exposure": 166.23,
+          "false_positive_risk": 0.49,
+          "recommended_action": "link to ring and escalate synthetic disruption review",
+          "status": "reviewed",
+          "investigator_id": "inv_01",
+          "review_hours": 0.75,
+          "notes": "Synthetic evidence bundle generated for defensive simulation."
+        },
+        {
+          "case_id": "case_00005_acct_000279",
+          "day_opened": 19,
+          "alert_ids": [
+            "alert_graph_model_acct_000279"
+          ],
+          "account_ids": [
+            "acct_000279"
+          ],
+          "merchant_ids": [],
+          "ring_id": null,
+          "priority_score": 0.6313,
+          "dollar_exposure": 61.94,
+          "false_positive_risk": 0.3687,
+          "recommended_action": "hold transaction/account for synthetic investigator review",
+          "status": "reviewed",
+          "investigator_id": "inv_02",
+          "review_hours": 0.75,
+          "notes": "Synthetic evidence bundle generated for defensive simulation."
+        }
+      ],
+      "reviewed_cases": 7,
+      "queued_cases": 0
+    },
+    "investigator_summaries": [
+      {
+        "llm_enabled": false,
+        "provider": "deterministic",
+        "summary": "Case case_00003_acct_000191 has priority 0.9866 with ring_002, exposure $73.48, and graph context: no sampled neighbors. Recommended action: link to ring and escalate synthetic disruption review.",
+        "safety_note": "Synthetic case summary only; no real customer or fraud-enablement data."
+      },
+      {
+        "llm_enabled": false,
+        "provider": "deterministic",
+        "summary": "Case case_00001_acct_000048 has priority 0.9673 with no linked ring, exposure $186.37, and graph context: no sampled neighbors. Recommended action: hold transaction/account for synthetic investigator review.",
+        "safety_note": "Synthetic case summary only; no real customer or fraud-enablement data."
+      },
+      {
+        "llm_enabled": false,
+        "provider": "deterministic",
+        "summary": "Case case_00002_acct_000173 has priority 0.9248 with no linked ring, exposure $487.01, and graph context: no sampled neighbors. Recommended action: hold transaction/account for synthetic investigator review.",
+        "safety_note": "Synthetic case summary only; no real customer or fraud-enablement data."
+      },
+      {
+        "llm_enabled": false,
+        "provider": "deterministic",
+        "summary": "Case case_00004_acct_000192 has priority 0.9248 with no linked ring, exposure $340.05, and graph context: no sampled neighbors. Recommended action: hold transaction/account for synthetic investigator review.",
+        "safety_note": "Synthetic case summary only; no real customer or fraud-enablement data."
+      },
+      {
+        "llm_enabled": false,
+        "provider": "deterministic",
+        "summary": "Case case_00000_acct_000034 has priority 0.9248 with no linked ring, exposure $271.33, and graph context: no sampled neighbors. Recommended action: hold transaction/account for synthetic investigator review.",
+        "safety_note": "Synthetic case summary only; no real customer or fraud-enablement data."
+      }
+    ],
+    "graph_evidence": {
+      "node_count": 240,
+      "edge_count": 222,
+      "node_types": [
+        "account",
+        "account_change",
+        "case",
+        "chargeback",
+        "device",
+        "dispute",
+        "ip_cluster",
+        "merchant",
+        "payment_instrument",
+        "refund",
+        "ring",
+        "support_contact",
+        "transaction"
+      ],
+      "edge_types": [
+        "account-change",
+        "account-filed-chargeback",
+        "account-opened-dispute",
+        "account-requested-refund",
+        "case-account",
+        "change-device",
+        "change-ip",
+        "initiated-transaction",
+        "ring-member",
+        "ring-merchant",
+        "support-linked-transaction",
+        "transacted-with",
+        "transaction-at-merchant",
+        "transaction-chargeback",
+        "transaction-disputed",
+        "transaction-refunded",
+        "transaction-used-payment",
+        "used-device",
+        "used-ip-cluster"
+      ]
+    },
+    "operations": {
+      "cases_opened": 7.0,
+      "cases_reviewed": 7.0,
+      "backlog": 0.0,
+      "investigator_hours_used": 5.25,
+      "sla_missed": 0.0
+    },
+    "financial_impact": {
+      "fraud_dollars_attempted": 3766.81,
+      "fraud_dollars_blocked": 239.71,
+      "fraud_dollars_missed": 3527.1,
+      "false_positive_cost": 120.0,
+      "review_cost": 341.25,
+      "net_savings": -221.54,
+      "investigator_roi": -42.2
+    },
+    "adversarial_resilience": {
+      "pre_adaptation_recall": 0.1011,
+      "post_adaptation_recall": 0.0653,
+      "recall_decay": 0.0358,
+      "adversarial_half_life": 3.25,
+      "defense_brittleness_score": 0.0358,
+      "strategy_robustness_index": 0.1161,
+      "adaptation_pressure": 0.5
+    },
+    "strategy_diagnostics": {},
+    "methodology": {
+      "data": "Synthetic closed-world payment network generated from a seed.",
+      "labels": "Fraud labels are available for evaluation but represent synthetic ground truth only.",
+      "adaptation": "Rings adapt through abstract simulator parameters after synthetic defensive friction.",
+      "safety": "The report intentionally omits real-world operational fraud instructions."
+    },
+    "recommendation": "Recommended defense: graph_feature_model + ring_priority investigation. This recommendation is based on synthetic fraud dollars blocked, ring-level recall, investigator workload, and adversarial resilience in the generated scenario."
+  }
+}

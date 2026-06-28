@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FraudWar After Action Report",
+  "type": "object",
+  "required": ["title", "disclaimer", "run_id", "executive_summary", "recommendation"],
+  "properties": {
+    "title": {"type": "string"},
+    "disclaimer": {"type": "string"},
+    "run_id": {"type": "string"},
+    "executive_summary": {
+      "type": "object",
+      "required": ["recommended_defense", "net_fraud_loss", "prevented_loss", "investigator_roi"],
+      "properties": {
+        "recommended_defense": {"type": "string"},
+        "net_fraud_loss": {"type": "number"},
+        "prevented_loss": {"type": "number"},
+        "false_positive_cost": {"type": "number"},
+        "investigator_roi": {"type": "number"},
+        "adversarial_half_life": {},
+        "top_risk": {"type": "string"}
+      }
+    },
+    "defense_comparison": {"type": "array"},
+    "active_rings": {"type": "array"},
+    "battlefield_timeline": {"type": "array"},
+    "operations": {"type": "object"},
+    "financial_impact": {"type": "object"},
+    "adversarial_resilience": {"type": "object"},
+    "recommendation": {"type": "string"}
+  }
+}
+
