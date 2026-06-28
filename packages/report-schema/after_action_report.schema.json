@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "FraudWar After Action Report",
+  "title": "FraudWar Run Memo",
   "type": "object",
   "required": ["title", "disclaimer", "run_id", "executive_summary", "recommendation"],
   "properties": {
@@ -22,11 +22,10 @@
     },
     "defense_comparison": {"type": "array"},
     "active_rings": {"type": "array"},
-    "battlefield_timeline": {"type": "array"},
+    "event_timeline": {"type": "array"},
     "operations": {"type": "object"},
     "financial_impact": {"type": "object"},
-    "adversarial_resilience": {"type": "object"},
+    "recall_under_drift": {"type": "object"},
     "recommendation": {"type": "string"}
   }
 }
-

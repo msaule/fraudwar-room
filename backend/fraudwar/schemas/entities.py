@@ -7,7 +7,7 @@ from pydantic import BaseModel, Field
 
 SAFETY_DISCLAIMER = (
     "FraudWar Room uses synthetic data and abstract adversarial behavior for defensive "
-    "research, analytics, and portfolio demonstration. It is not a guide to committing "
+    "research, analytics, and product testing. It is not a guide to committing "
     "fraud and must not be used to facilitate abuse."
 )
 

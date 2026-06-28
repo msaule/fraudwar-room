@@ -15,7 +15,7 @@ def build_after_action_report(run: dict) -> dict:
     rings = run.get("rings", [])
     top_cases = sorted(cases, key=lambda case: case.get("priority_score", 0), reverse=True)[:10]
     return {
-        "title": "Fraud After-Action Report",
+        "title": "Fraud Run Memo",
         "disclaimer": SAFETY_DISCLAIMER,
         "run_id": run["run_id"],
         "executive_summary": {
@@ -30,7 +30,7 @@ def build_after_action_report(run: dict) -> dict:
         "defense_comparison": run.get("defense_comparison", []),
         "entity_coverage": run.get("entities", {}),
         "active_rings": rings,
-        "battlefield_timeline": run.get("timeline", []),
+        "event_timeline": run.get("timeline", []),
         "case_queue": {
             "total_sampled_cases": len(cases),
             "top_cases": top_cases,
@@ -46,7 +46,7 @@ def build_after_action_report(run: dict) -> dict:
         },
         "operations": metrics["operations"],
         "financial_impact": metrics["financial"],
-        "adversarial_resilience": metrics["adversarial"],
+        "recall_under_drift": metrics["adversarial"],
         "strategy_diagnostics": metrics.get("strategy", {}),
         "methodology": {
             "data": "Synthetic closed-world payment network generated from a seed.",
@@ -55,9 +55,8 @@ def build_after_action_report(run: dict) -> dict:
             "safety": "The report intentionally omits real-world operational fraud instructions.",
         },
         "recommendation": (
-            f"Recommended defense: {best}. This recommendation is based on synthetic "
-            "fraud dollars blocked, ring-level recall, investigator workload, and "
-            "adversarial resilience in the generated scenario."
+            f"Recommended defense: {best}. The choice is based on blocked loss, ring "
+            "recall, review load, and recall decay in this generated run."
         ),
     }
 
@@ -79,7 +78,7 @@ def report_to_markdown(report: dict) -> str:
     graph = report["graph_evidence"]
     operations = report["operations"]
     financial = report["financial_impact"]
-    resilience = report["adversarial_resilience"]
+    drift = report["recall_under_drift"]
     return f"""# {report["title"]}
 
 > {report["disclaimer"]}
@@ -94,15 +93,15 @@ def report_to_markdown(report: dict) -> str:
 - Adversarial half-life: {summary["adversarial_half_life"]} simulation days
 - Top risk: {summary["top_risk"]}
 
-## Battlefield Timeline
+## Event Timeline
 
-{_markdown_events(report["battlefield_timeline"])}
+{_markdown_events(report["event_timeline"])}
 
 ## Active Rings
 
 {_markdown_rings(report["active_rings"])}
 
-## Defense Comparison
+## Defense Results
 
 {_markdown_defenses(report["defense_comparison"])}
 
@@ -130,14 +129,14 @@ def report_to_markdown(report: dict) -> str:
 - Review cost: ${financial.get("review_cost", 0):,.2f}
 - Net savings: ${financial.get("net_savings", 0):,.2f}
 
-## Adversarial Resilience
+## Recall Under Drift
 
-- Pre-adaptation recall: {resilience.get("pre_adaptation_recall", 0)}
-- Post-adaptation recall: {resilience.get("post_adaptation_recall", 0)}
-- Recall decay: {resilience.get("recall_decay", 0)}
-- Adversarial half-life: {resilience.get("adversarial_half_life", 0)}
-- Brittleness score: {resilience.get("defense_brittleness_score", 0)}
-- Robustness index: {resilience.get("strategy_robustness_index", 0)}
+- Pre-adaptation recall: {drift.get("pre_adaptation_recall", 0)}
+- Post-adaptation recall: {drift.get("post_adaptation_recall", 0)}
+- Recall decay: {drift.get("recall_decay", 0)}
+- Adversarial half-life: {drift.get("adversarial_half_life", 0)}
+- Brittleness score: {drift.get("defense_brittleness_score", 0)}
+- Robustness index: {drift.get("strategy_robustness_index", 0)}
 
 ## Recommendation
 
@@ -191,7 +190,7 @@ def report_to_html(report: dict) -> str:
       <p>{report["graph_evidence"]["node_count"]} nodes and {report["graph_evidence"]["edge_count"]} links across {", ".join(report["graph_evidence"]["node_types"])}.</p>
     </section>
     <section>
-      <h2>Defense Comparison</h2>
+      <h2>Defense Results</h2>
       {_html_defense_table(report["defense_comparison"])}
     </section>
     <section>
@@ -199,8 +198,8 @@ def report_to_html(report: dict) -> str:
       <p>Cases opened: {report["operations"].get("cases_opened", 0)}. Backlog: {report["operations"].get("backlog", 0)}. Investigator hours: {report["operations"].get("investigator_hours_used", 0)}.</p>
     </section>
     <section>
-      <h2>Adversarial Resilience</h2>
-      <p>Pre-adaptation recall: {report["adversarial_resilience"].get("pre_adaptation_recall", 0)}. Post-adaptation recall: {report["adversarial_resilience"].get("post_adaptation_recall", 0)}. Half-life: {report["adversarial_resilience"].get("adversarial_half_life", 0)}.</p>
+      <h2>Recall Under Drift</h2>
+      <p>Pre-adaptation recall: {report["recall_under_drift"].get("pre_adaptation_recall", 0)}. Post-adaptation recall: {report["recall_under_drift"].get("post_adaptation_recall", 0)}. Half-life: {report["recall_under_drift"].get("adversarial_half_life", 0)}.</p>
     </section>
   </main>
 </body>

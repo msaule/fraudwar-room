@@ -1,7 +1,7 @@
 # FraudWar Room Research Brief
 
 FraudWar Room uses synthetic data and abstract adversarial behavior for defensive research,
-analytics, and portfolio demonstration. It is not a guide to committing fraud and must not
+analytics, and product testing. It is not a guide to committing fraud and must not
 be used to facilitate abuse.
 
 ## Executive Takeaways
@@ -19,7 +19,7 @@ show three important patterns:
 
 FraudWar Room should differentiate through FraudArena: a reproducible closed-world simulator
 where synthetic rings adapt after defensive friction and defenses are evaluated on money,
-operations, graph linkage, and resilience.
+operations, graph linkage, and recall decay.
 
 ## Sources Inspected
 
@@ -52,14 +52,14 @@ operations, graph linkage, and resilience.
 
 | Tool | High-level positioning | What to learn | What not to copy |
 | --- | --- | --- | --- |
-| Feedzai | AI risk operations for fraud and financial crime | Real-time decisions, explainability, analyst workflows | Proprietary claims or brand language |
+| Feedzai | Risk operations for fraud and financial crime | Real-time decisions, explainability, analyst workflows | Proprietary claims or brand language |
 | Featurespace | Adaptive behavioral analytics through ARIC Risk Hub | Behavioral baselines and adaptive scoring | Vendor-specific architecture |
 | FICO Falcon | Enterprise card/payment fraud decisioning | Mature transaction scoring and decision orchestration | Card-network-specific assumptions |
 | NICE Actimize | Financial crime, fraud, AML, case management | Investigation queues and operational dashboards | Compliance-heavy enterprise scope for MVP |
 | SAS Fraud Management | Enterprise fraud detection and analytics | Cost/risk analytics, alert triage, enterprise reporting | Overbroad platform surface |
 | Palantir financial crime | Graph-centric investigation and data integration | Entity resolution, graph evidence, investigation workspace | Any implication of access to real bank data |
 
-## Recent AI and Graph Fraud Research
+## Recent Graph and Simulation Research
 
 Public graph fraud research is useful for feature inspiration but does not fully solve the
 product question. Elliptic and DGraph-style datasets benchmark graph anomaly detection on
@@ -74,8 +74,7 @@ ring behavior.
 
 The prompt mentions SAGE and MultiAgentFraudBench-like frameworks. I did not treat those as
 validated canonical sources without a stable source URL in this pass. They remain research
-targets for follow-up inspection. FraudWar Room does not need LLM agents to be credible; the
-core loop should be deterministic and auditable.
+targets for follow-up inspection. The core loop should be deterministic and auditable.
 
 ## Evaluation Methodology
 
@@ -93,10 +92,10 @@ Classification metrics are necessary but insufficient:
 
 ## Gap Analysis
 
-Existing portfolio projects often train on a static public fraud CSV and display AUC. That
-does not demonstrate fraud strategy judgment. Existing commercial platforms are serious but
-closed. Existing academic benchmarks help model design but rarely include investigator
-workload and adaptive response.
+Many public demos train on a static fraud CSV and display AUC. That misses the operating
+problem. Commercial platforms handle operations more seriously, but their evaluation
+environments are closed. Academic benchmarks help model design but rarely include review
+capacity and adaptive response.
 
 FraudWar Room can be genuinely different by making the arena the primitive:
 
@@ -121,14 +120,14 @@ SyntheticPaymentNetwork
 - Rules baseline, supervised transaction model, and graph-feature model.
 - Investigator queue with capacity and backlog.
 - Ring-level recall, adversarial half-life, and investigator ROI.
-- After-action report and dashboard backed by generated data.
+- Run memo and dashboard backed by generated data.
 
 ## What To Avoid
 
 - Real platform evasion, refund abuse instructions, account takeover instructions, money
   laundering guidance, phishing, credential theft, or dark-web content.
 - A dashboard that is only static cards with fake numbers.
-- LLM-generated case conclusions as the core product.
+- Provider-generated case conclusions as the core product.
 - Claims that the simulator prevents real fraud.
 
 ## How To Stay Non-Generic
@@ -140,4 +139,3 @@ Lead every demo with the adaptive loop:
 3. Investigators create friction under capacity constraints.
 4. The ring adapts abstractly.
 5. The system reports whether defense effectiveness decays.
-

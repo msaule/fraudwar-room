@@ -5,10 +5,10 @@ The MVP is a local monorepo:
 - `backend/fraudwar`: Python package with simulation, graph features, defenses, metrics,
   reports, CLI, and FastAPI.
 - `frontend`: Next.js dashboard consuming generated demo data.
-- `data/generated`: experiment outputs and after-action reports.
+- `data/generated`: experiment outputs and run memos.
 - `data/generated/fraudwar.sqlite`: local SQLite store for runs, entities, metrics, graph
   payloads, alerts, cases, and report paths.
-- `docs`: research, product, safety, metrics, usage, and portfolio materials.
+- `docs`: research, product, safety, metrics, and usage notes.
 
 ## Core Loop
 
@@ -30,5 +30,5 @@ The MVP is a local monorepo:
 - `InvestigatorQueue`: capacity, backlog, SLA, review hours.
 - `CostModel`: loss, blocked value, false positives, review cost.
 - `GraphEvidenceEngine`: NetworkX graph and account-level graph features.
-- `AfterActionReport`: JSON, Markdown, and HTML.
+- `AfterActionReport`: JSON, Markdown, and HTML run memo payload.
 - `PersistenceStore`: local SQLite tables for reproducible experiment artifacts.

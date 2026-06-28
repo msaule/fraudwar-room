@@ -3450,8 +3450,8 @@
     "sqlite_path": "fraudwar.sqlite"
   },
   "report": {
-    "title": "Fraud After-Action Report",
-    "disclaimer": "FraudWar Room uses synthetic data and abstract adversarial behavior for defensive research, analytics, and portfolio demonstration. It is not a guide to committing fraud and must not be used to facilitate abuse.",
+    "title": "Fraud Run Memo",
+    "disclaimer": "Demo data only. Do not use this project with real customer, payment, or case data. The simulator is for defensive evaluation, not guidance for abuse.",
     "run_id": "run_static_vs_adaptive_42",
     "executive_summary": {
       "recommended_defense": "graph_feature_model + ring_priority investigation",
@@ -3764,7 +3764,7 @@
         "detection_memory": []
       }
     ],
-    "battlefield_timeline": [
+    "event_timeline": [
       {
         "day": 3,
         "type": "ring_emergence",
@@ -3993,31 +3993,31 @@
     },
     "investigator_summaries": [
       {
-        "llm_enabled": false,
+        "provider_enabled": false,
         "provider": "deterministic",
         "summary": "Case case_00003_acct_000191 has priority 0.9866 with ring_002, exposure $73.48, and graph context: no sampled neighbors. Recommended action: link to ring and escalate synthetic disruption review.",
         "safety_note": "Synthetic case summary only; no real customer or fraud-enablement data."
       },
       {
-        "llm_enabled": false,
+        "provider_enabled": false,
         "provider": "deterministic",
         "summary": "Case case_00001_acct_000048 has priority 0.9673 with no linked ring, exposure $186.37, and graph context: no sampled neighbors. Recommended action: hold transaction/account for synthetic investigator review.",
         "safety_note": "Synthetic case summary only; no real customer or fraud-enablement data."
       },
       {
-        "llm_enabled": false,
+        "provider_enabled": false,
         "provider": "deterministic",
         "summary": "Case case_00002_acct_000173 has priority 0.9248 with no linked ring, exposure $487.01, and graph context: no sampled neighbors. Recommended action: hold transaction/account for synthetic investigator review.",
         "safety_note": "Synthetic case summary only; no real customer or fraud-enablement data."
       },
       {
-        "llm_enabled": false,
+        "provider_enabled": false,
         "provider": "deterministic",
         "summary": "Case case_00004_acct_000192 has priority 0.9248 with no linked ring, exposure $340.05, and graph context: no sampled neighbors. Recommended action: hold transaction/account for synthetic investigator review.",
         "safety_note": "Synthetic case summary only; no real customer or fraud-enablement data."
       },
       {
-        "llm_enabled": false,
+        "provider_enabled": false,
         "provider": "deterministic",
         "summary": "Case case_00000_acct_000034 has priority 0.9248 with no linked ring, exposure $271.33, and graph context: no sampled neighbors. Recommended action: hold transaction/account for synthetic investigator review.",
         "safety_note": "Synthetic case summary only; no real customer or fraud-enablement data."
@@ -4079,7 +4079,7 @@
       "net_savings": -221.54,
       "investigator_roi": -42.2
     },
-    "adversarial_resilience": {
+    "recall_under_drift": {
       "pre_adaptation_recall": 0.1011,
       "post_adaptation_recall": 0.0653,
       "recall_decay": 0.0358,
@@ -4095,6 +4095,6 @@
       "adaptation": "Rings adapt through abstract simulator parameters after synthetic defensive friction.",
       "safety": "The report intentionally omits real-world operational fraud instructions."
     },
-    "recommendation": "Recommended defense: graph_feature_model + ring_priority investigation. This recommendation is based on synthetic fraud dollars blocked, ring-level recall, investigator workload, and adversarial resilience in the generated scenario."
+    "recommendation": "Recommended defense: graph_feature_model + ring_priority investigation. This recommendation is based on blocked loss, ring recall, review load, and recall decay in this generated run."
   }
 }

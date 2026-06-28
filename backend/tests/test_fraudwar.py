@@ -132,14 +132,14 @@ def test_investigator_summary_fallback_and_provider(monkeypatch) -> None:
         "dollar_exposure": 1200,
         "recommended_action": "link to ring and escalate synthetic disruption review",
     }
-    monkeypatch.delenv("FRAUDWAR_ENABLE_LLM_SUMMARIES", raising=False)
+    monkeypatch.delenv("FRAUDWAR_ENABLE_CASE_SUMMARIES", raising=False)
     fallback = summarize_case(case)
-    assert fallback["llm_enabled"] is False
+    assert fallback["provider_enabled"] is False
     assert "case_test" in str(fallback["summary"])
-    monkeypatch.setenv("FRAUDWAR_ENABLE_LLM_SUMMARIES", "1")
-    monkeypatch.setenv("FRAUDWAR_LLM_PROVIDER", "openai")
+    monkeypatch.setenv("FRAUDWAR_ENABLE_CASE_SUMMARIES", "1")
+    monkeypatch.setenv("FRAUDWAR_CASE_SUMMARY_PROVIDER", "openai")
     monkeypatch.delenv("OPENAI_API_KEY", raising=False)
     provider_result = summarize_case(case)
-    assert provider_result["llm_enabled"] is False
+    assert provider_result["provider_enabled"] is False
     assert provider_result["provider"] == "openai"
     assert "OPENAI_API_KEY" in str(provider_result["provider_error"])

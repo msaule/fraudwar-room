@@ -111,16 +111,16 @@ export function Dashboard({ run, view = 'command' }: { run: Run; view?: View }) 
       <aside className="sidebar">
         <div className="brand">
           <strong>FraudWar Room</strong>
-          <span>Fraud loss, rings, queue pressure</span>
+          <span>Loss, ring recall, review queue</span>
         </div>
         <nav className="nav">
-          <a className={view === 'command' ? 'active' : ''} href="/"><Radar size={16} /> Command Center</a>
-          <a className={view === 'battlefield' ? 'active' : ''} href="/battlefield"><Network size={16} /> Battlefield</a>
+          <a className={view === 'command' ? 'active' : ''} href="/"><Radar size={16} /> Overview</a>
+          <a className={view === 'battlefield' ? 'active' : ''} href="/battlefield"><Network size={16} /> Evidence Map</a>
           <a className={view === 'rings' ? 'active' : ''} href="/rings"><GitBranch size={16} /> Rings</a>
           <a className={view === 'cases' ? 'active' : ''} href="/cases"><BriefcaseBusiness size={16} /> Cases</a>
           <a className={view === 'experiments' ? 'active' : ''} href="/experiments"><BarChart3 size={16} /> Experiments</a>
-          <a className={view === 'defense-lab' ? 'active' : ''} href="/defense-lab"><BarChart3 size={16} /> Defense Lab</a>
-          <a className={view === 'after-action' ? 'active' : ''} href="/after-action"><FileText size={16} /> After-Action</a>
+          <a className={view === 'defense-lab' ? 'active' : ''} href="/defense-lab"><BarChart3 size={16} /> Defense Tests</a>
+          <a className={view === 'after-action' ? 'active' : ''} href="/after-action"><FileText size={16} /> Run Memo</a>
           <a className={view === 'methodology' ? 'active' : ''} href="/methodology"><ShieldCheck size={16} /> Methodology</a>
         </nav>
       </aside>
@@ -272,7 +272,7 @@ export function Dashboard({ run, view = 'command' }: { run: Run; view?: View }) 
             {(view === 'command' || view === 'defense-lab' || view === 'experiments') && (
             <section className="panel" id="defenses">
               <div className="panel-header">
-                <h2>Defense Comparison</h2>
+                <h2>Defense Results</h2>
                 <span>transaction and ring outcomes</span>
               </div>
               <div className="chart">
@@ -373,7 +373,7 @@ export function Dashboard({ run, view = 'command' }: { run: Run; view?: View }) 
             {(view === 'command' || view === 'after-action') && (
             <section className="panel" id="report">
               <div className="panel-header">
-                <h2>Decision Memo</h2>
+                <h2>Run Memo</h2>
                 <span>run summary</span>
               </div>
               <div className="report">
@@ -511,12 +511,12 @@ function filterGraph(graph: Run['graph'], ringFilter: string) {
 function viewTitle(view: View, fallback: string) {
   const titles: Record<View, string> = {
     command: fallback,
-    battlefield: 'Battlefield',
+    battlefield: 'Evidence Map',
     rings: 'Rings',
     cases: 'Cases',
     experiments: 'Experiments',
-    'defense-lab': 'Defense Lab',
-    'after-action': 'After-Action Report',
+    'defense-lab': 'Defense Tests',
+    'after-action': 'Run Memo',
     methodology: 'Methodology'
   }
   return titles[view]

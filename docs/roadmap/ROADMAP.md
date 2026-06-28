@@ -16,12 +16,11 @@
 - SQLite persistence.
 - More detailed active learning policy.
 - Drift detection dashboard.
-- Docker Compose polish.
+- Docker Compose cleanup.
 
 ## Stretch
 
 - PyTorch Geometric GNN.
-- Optional LLM investigator summaries.
-- Academic-style whitepaper.
+- Optional case-summary drafting.
+- Research writeup.
 - Larger scenario library.
-

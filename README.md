@@ -4,25 +4,24 @@ Fraud detection is usually presented as a static classification problem.
 
 Real fraud is not static.
 
-Fraud rings observe friction, abandon burned accounts, split clusters, change timing,
-exploit investigator capacity, and learn back.
+Fraud rings react to friction. In the simulator they abandon burned accounts, split
+clusters, change timing, and put pressure on the review queue.
 
-FraudWar Room is an adaptive fraud simulation and investigation cockpit. It generates a
+FraudWar Room is a local fraud simulation and review dashboard. It generates a
 synthetic payment network with benign users, merchants, fraud rings, mule accounts, refunds,
 chargebacks, graph evidence, and investigator workflows. Fraud rings adapt after detection
 while defense strategies are evaluated on fraud loss, false-positive harm, ring-level recall,
 time-to-detection, adversarial half-life, and investigator workload.
 
-Fraud is not a dataset. It is an opponent.
-
 > FraudWar Room uses synthetic data and abstract adversarial behavior for defensive research,
-> analytics, and portfolio demonstration. It is not a guide to committing fraud and must not
-> be used to facilitate abuse.
+> analytics, and product testing. It is not a guide to committing fraud and must not be used
+> to facilitate abuse.
 
 ## What Is FraudWar Room?
 
-FraudWar Room is a portfolio-grade synthetic benchmark and dashboard for evaluating fraud
-defenses under adaptive pressure. The core primitive is FraudArena:
+FraudWar Room is a local simulator for testing fraud controls under drift. It generates a
+closed payment network, runs defenses against it, and reports what happened to loss, review
+load, and ring discovery. The core primitive is FraudArena:
 
 ```text
 SyntheticPaymentNetwork
@@ -37,7 +36,7 @@ SyntheticPaymentNetwork
 + AfterActionReport
 ```
 
-The fraud model is not the project. The arena is the project.
+The point is the arena, not one score from one model.
 
 ## Why Static Fraud Models Are Not Enough
 
@@ -49,7 +48,7 @@ FraudWar Room evaluates defenses at three levels:
 
 - Transaction intelligence: is this transaction or account suspicious?
 - Network intelligence: is this entity part of a coordinated synthetic ring?
-- Adversarial operations intelligence: does the defense survive after abstract adaptation?
+- Drift and operations: does the defense still work after synthetic behavior changes?
 
 ## Quickstart
 
@@ -62,29 +61,29 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:3000.
+Open http://localhost:3000. The dashboard uses demo data generated from the simulator.
 
 ## Demo Screenshots
 
-Command Center:
+Overview:
 
-![Command Center](docs/portfolio/screenshots/command-center.png)
+![Overview](docs/portfolio/screenshots/command-center.png)
 
-Battlefield graph and ring overlays:
+Evidence map and ring overlays:
 
-![Battlefield](docs/portfolio/screenshots/battlefield.png)
+![Evidence Map](docs/portfolio/screenshots/battlefield.png)
 
 Case queue:
 
 ![Cases](docs/portfolio/screenshots/cases.png)
 
-Defense Lab:
+Defense Tests:
 
-![Defense Lab](docs/portfolio/screenshots/defense-lab.png)
+![Defense Tests](docs/portfolio/screenshots/defense-lab.png)
 
-After-Action Report:
+Run Memo:
 
-![After-Action Report](docs/portfolio/screenshots/after-action.png)
+![Run Memo](docs/portfolio/screenshots/after-action.png)
 
 Run the API:
 
@@ -140,8 +139,8 @@ transactions, refunds, chargebacks, fraud rings, alerts, cases, and investigator
 All data is synthetic and reproducible through seeds.
 
 `python scripts/generate_world.py` defaults to 10,000 accounts, 500 merchants, 100,000
-transactions, and 10 rings. Dashboard demo export uses a smaller scenario so UI checks remain
-fast while the full-scale generator path remains available and reproducible.
+transactions, and 10 rings. The dashboard export uses a smaller run so local UI checks stay
+quick.
 
 ## Adaptive Fraud Rings
 
@@ -181,13 +180,13 @@ and strategy robustness index.
 
 The Next.js dashboard includes:
 
-- Command center metrics.
-- Network graph evidence.
-- Battlefield timeline.
+- Loss, recall, queue, and ROI metrics.
+- Evidence map.
+- Event log.
 - Ring table.
 - Case queue.
-- Defense comparison charts.
-- After-action report summary.
+- Defense result charts.
+- Decision memo.
 - Methodology and safety boundary.
 
 ## Reports
@@ -232,7 +231,7 @@ This project is defensive and synthetic only. It must not contain or be used for
 backend/fraudwar       Python simulation, metrics, API, reports
 frontend               Next.js dashboard
 data/generated         Local generated runs and reports
-docs                   Research, product, safety, metrics, usage, portfolio
+docs                   Research, product, safety, metrics, and usage notes
 packages               Scenario and report JSON schemas
 scripts                CLI wrappers and demo export helpers
 ```
@@ -246,11 +245,11 @@ scripts                CLI wrappers and demo export helpers
 - Active Learning Under Drift
 - Adaptive Thresholding Under Queue Pressure
 
-## Portfolio Value
+## Why This Exists
 
-FraudWar Room demonstrates financial-crime analytics, graph intelligence, simulation,
-model evaluation, operations strategy, FastAPI, Next.js, product judgment, and safety-aware
-portfolio presentation in one coherent system.
+Most fraud demos stop at transaction recall. This project tests a wider question: what
+happens to loss, graph linkage, and review queues when the behavior changes after the first
+round of friction?
 
 ## Roadmap
 
@@ -259,8 +258,8 @@ portfolio presentation in one coherent system.
 - Multi-seed benchmark dashboards.
 - Calibrated queue simulation with configurable investigator staffing.
 - Optional GNN comparison runs in an environment with PyTorch Geometric installed.
-- Provider-backed LLM summaries as an opt-in assistive layer, never core.
+- Optional case-summary drafting through a configured provider, never part of scoring.
 
-See [OPTIONAL_GNN_AND_LLM.md](docs/usage/OPTIONAL_GNN_AND_LLM.md) for opt-in setup.
+See [OPTIONAL_MODELING_AND_SUMMARIES.md](docs/usage/OPTIONAL_MODELING_AND_SUMMARIES.md) for opt-in setup.
 See [BENCHMARKING.md](docs/benchmarks/BENCHMARKING.md) for seed-sweep evaluation.
 See [DEPLOYMENT.md](docs/usage/DEPLOYMENT.md) for Docker and local production checks.

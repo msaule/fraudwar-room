@@ -2,9 +2,9 @@
 
 ## Vision
 
-FraudWar Room is an adaptive fraud simulation and investigation cockpit. It evaluates
+FraudWar Room is an adaptive fraud simulation and review dashboard. It evaluates
 defenses against synthetic rings that change behavior after detection and reports outcomes
-through transaction, graph, operations, financial, and resilience metrics.
+through transaction, graph, operations, financial, and drift metrics.
 
 ## Target Users
 
@@ -13,7 +13,7 @@ through transaction, graph, operations, financial, and resilience metrics.
 - Risk operations leader: manage alert burden, backlog, capacity, and dollars saved.
 - Data scientist: compare drift, robustness, features, and cost-sensitive metrics.
 - Trust-and-safety team: evaluate defenses under synthetic attack pressure.
-- Recruiter or hiring manager: see technical depth, visual polish, and business relevance.
+- Engineering reviewer: inspect the simulator, assumptions, API, tests, and dashboard.
 
 ## Non-Goals
 
@@ -21,16 +21,16 @@ through transaction, graph, operations, financial, and resilience metrics.
 - No real payment data.
 - No fraud-enablement instructions.
 - No claim that this prevents real fraud.
-- No LLM dependency for the core system.
+- No provider dependency for the core system.
 
 ## Product Surfaces
 
 - FastAPI simulation API.
 - Python CLI and scripts.
 - Generated synthetic data and experiment outputs.
-- Executive after-action reports in JSON, Markdown, and HTML.
-- Next.js dashboard with command center, graph evidence, rings, cases, experiments, and
-  report view.
+- Run memos in JSON, Markdown, and HTML.
+- Next.js dashboard with overview, graph evidence, rings, cases, experiments, and report
+  view.
 
 ## MVP Scope
 
@@ -40,13 +40,13 @@ through transaction, graph, operations, financial, and resilience metrics.
 - Rules, supervised transaction, and graph-feature defenses.
 - Investigator queue.
 - Signature metrics: ring-level recall, adversarial half-life, investigator ROI.
-- Polished dashboard and documentation.
+- Usable dashboard and documentation.
 
 ## Future Scope
 
 - Scenario schema with YAML/JSON configs.
 - PyTorch Geometric GNN.
-- Optional LLM summaries.
+- Optional case-summary drafting.
 - SQLite persistence.
 - Dockerized one-command demo.
 - Larger benchmark scenarios.
@@ -75,6 +75,5 @@ GraphEvidenceEngine -> CostModel -> AfterActionReport -> Dashboard
 
 ## Launch Strategy
 
-Launch as a portfolio-grade open-source project with a clear README, screenshots, generated
-reports, and a short writeup explaining why static fraud detection is insufficient.
-
+Keep the repo private until the assumptions, screenshots, generated reports, and local
+setup steps are easy to review.

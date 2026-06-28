@@ -1,6 +1,6 @@
 # Deployment
 
-FraudWar Room is designed for local demo and private portfolio review first.
+FraudWar Room is designed for local review first.
 
 ## Docker Compose
 

@@ -17,7 +17,7 @@ test('battlefield renders graph evidence, filters, and ring overlays', async ({ 
 
   await page.goto('/battlefield')
 
-  await expect(page.locator('h1')).toHaveText('Battlefield')
+  await expect(page.locator('h1')).toHaveText('Evidence Map')
   await expect(page.locator('input[type="range"]')).toHaveCount(1)
   await expect(page.locator('select')).toHaveCount(1)
   await expect(page.locator('.ring-overlay-row')).toHaveCount(4)
@@ -37,8 +37,8 @@ test('primary dashboard routes render without empty shells', async ({ page }) =>
     ['/rings', 'Rings'],
     ['/cases', 'Cases'],
     ['/experiments', 'Experiments'],
-    ['/defense-lab', 'Defense Lab'],
-    ['/after-action', 'After-Action Report'],
+    ['/defense-lab', 'Defense Tests'],
+    ['/after-action', 'Run Memo'],
     ['/methodology', 'Methodology']
   ] as const
 

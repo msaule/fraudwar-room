@@ -1,7 +1,7 @@
 # Critical Review
 
 FraudWar Room uses synthetic data and abstract adversarial behavior for defensive research,
-analytics, and portfolio demonstration. It is not a guide to committing fraud and must not
+analytics, and product testing. It is not a guide to committing fraud and must not
 be used to facilitate abuse.
 
 1. Is this actually different from existing fraud projects?
@@ -15,10 +15,10 @@ investigator workload, and dollars saved is meaningfully sharper.
 Leading with AUC, hiding the synthetic world, treating labels as the only truth, and using a
 dashboard full of static metrics without case and graph evidence.
 
-3. What would make it look like AI hype?
+3. What would make it feel unserious?
 
-Adding LLM summaries before the simulation works, claiming autonomous fraud prevention, or
-using vague language about agents without measurable behavior.
+Leading with optional text generation, claiming real-world prevention, or using broad claims
+without showing loss, queue, and ring-level results.
 
 4. What would impress a senior fraud analytics leader?
 
@@ -26,12 +26,11 @@ Clear assumptions, explicit false-positive costs, queue pressure, ring-level det
 model decay under adaptation, and honest limitations. The UI should help explain tradeoffs,
 not just look expensive.
 
-5. What would make it credible to Goldman Sachs, Morgan Stanley, Amazon, or Microsoft
-recruiters?
+5. What would make it credible to a fraud analytics or risk systems reviewer?
 
 An end-to-end system: synthetic data generation, graph analytics, detection baselines,
-operations simulation, FastAPI, dashboard, tests, and a portfolio writeup that connects
-engineering decisions to risk strategy.
+operations simulation, FastAPI, dashboard, tests, and clear notes connecting engineering
+decisions to risk strategy.
 
 6. Biggest implementation risks
 
@@ -39,12 +38,12 @@ engineering decisions to risk strategy.
 - UI polish consuming time before metrics work.
 - Model results being noisy at small scale.
 - Accidentally describing real fraud operations.
-- Overbuilding GNN or LLM features before the arena is stable.
+- Overbuilding optional model or summary features before the arena is stable.
 
 7. What should be cut from MVP?
 
-GNNs, LLM investigator summaries, streaming operations, real database persistence, and
-full auth. Keep the core demo reproducible and local.
+GNN comparisons, case-summary drafting, streaming operations, full auth, and
+deployment hardening. Keep the core run reproducible and local.
 
 8. What is the unique primitive?
 
@@ -61,6 +60,5 @@ evasion steps.
 
 The graph model has similar or slightly lower transaction recall than a high-sensitivity
 policy, but it links more rings, creates less backlog, and retains effectiveness longer
-after adaptation. The after-action report recommends graph-feature scoring plus ring-priority
+after drift. The run memo recommends graph-feature scoring plus ring-priority
 investigation because it improves investigator ROI and adversarial half-life.
-

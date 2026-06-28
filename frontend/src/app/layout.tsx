@@ -3,7 +3,7 @@ import './globals.css'
 
 export const metadata: Metadata = {
   title: 'FraudWar Room',
-  description: 'Adaptive fraud simulation and investigation cockpit',
+  description: 'Adaptive fraud simulation and review dashboard',
   icons: {
     icon: '/favicon.svg'
   }

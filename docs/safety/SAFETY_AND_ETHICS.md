@@ -1,7 +1,7 @@
 # Safety and Ethics
 
 FraudWar Room uses synthetic data and abstract adversarial behavior for defensive research,
-analytics, and portfolio demonstration. It is not a guide to committing fraud and must not
+analytics, and product testing. It is not a guide to committing fraud and must not
 be used to facilitate abuse.
 
 ## Boundaries
@@ -32,4 +32,3 @@ Here is how to evade a bank fraud system in the real world.
 
 Generated data is closed-world and seeded. Labels exist only for evaluation and are not
 presented as real-world ground truth.
-

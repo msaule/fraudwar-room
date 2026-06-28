@@ -12,8 +12,8 @@ from fraudwar.defenses.gnn import OptionalDependencyError, PyGGraphNeuralNetwork
 
 def main() -> None:
     gnn_available = PyGGraphNeuralNetwork.is_available()
-    llm_enabled = os.getenv("FRAUDWAR_ENABLE_LLM_SUMMARIES") == "1"
-    llm_provider = os.getenv("FRAUDWAR_LLM_PROVIDER", "local")
+    summaries_enabled = os.getenv("FRAUDWAR_ENABLE_CASE_SUMMARIES") == "1"
+    summary_provider = os.getenv("FRAUDWAR_CASE_SUMMARY_PROVIDER", "local")
     has_key = bool(os.getenv("OPENAI_API_KEY"))
 
     result = {
@@ -21,9 +21,9 @@ def main() -> None:
             "available": gnn_available,
             "install": 'pip install -e "backend[gnn]"',
         },
-        "llm_summaries": {
-            "enabled": llm_enabled,
-            "provider": llm_provider,
+        "case_summaries": {
+            "enabled": summaries_enabled,
+            "provider": summary_provider,
             "api_key_configured": has_key,
             "safe_default": "deterministic local summaries",
         },

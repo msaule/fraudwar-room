@@ -2,11 +2,11 @@
 
 ## Abstract
 
-Fraud detection is commonly evaluated as static binary classification. FraudWar Room frames
-fraud defense as an adversarial operations problem: synthetic rings generate activity,
-defenses create friction, investigators operate under capacity constraints, and rings adapt
-abstractly after detection. The benchmark reports transaction metrics, graph/ring metrics,
-financial impact, investigator workload, and adversarial resilience.
+Fraud detection is commonly evaluated as static binary classification. FraudWar Room tests a
+more operational question: synthetic rings generate activity, defenses create friction,
+investigators work through a limited queue, and behavior changes after detection. The
+benchmark reports transaction metrics, graph/ring metrics, financial impact, review load,
+and recall decay.
 
 ## Problem
 

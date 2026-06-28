@@ -1,7 +1,7 @@
 [project]
 name = "fraudwar"
 version = "0.1.0"
-description = "Adaptive synthetic fraud simulation and investigation cockpit"
+description = "Adaptive synthetic fraud simulation and review dashboard"
 requires-python = ">=3.11"
 dependencies = [
   "fastapi>=0.115",
@@ -17,7 +17,7 @@ dependencies = [
 [project.optional-dependencies]
 dev = ["pytest>=8.2", "ruff>=0.5"]
 gnn = ["torch>=2.3", "torch-geometric>=2.5"]
-llm = []
+summaries = []
 all = ["torch>=2.3", "torch-geometric>=2.5"]
 
 [project.scripts]

@@ -1,4 +1,4 @@
-# Optional GNN and LLM Features
+# Optional Modeling and Case Summaries
 
 FraudWar Room works without heavyweight machine-learning dependencies or API keys. The
 optional integrations below are disabled by default.
@@ -31,15 +31,15 @@ The GNN uses account-level node features and account-account edges derived from 
 synthetic devices, IP clusters, and merchants. If PyTorch Geometric is not installed, the
 class raises a clear `OptionalDependencyError`.
 
-## LLM Investigator Summaries
+## Case Summary Drafting
 
 Default behavior is deterministic local text. Provider calls are opt-in:
 
 ```bash
-set FRAUDWAR_ENABLE_LLM_SUMMARIES=1
-set FRAUDWAR_LLM_PROVIDER=openai
+set FRAUDWAR_ENABLE_CASE_SUMMARIES=1
+set FRAUDWAR_CASE_SUMMARY_PROVIDER=openai
 set OPENAI_API_KEY=...
-set FRAUDWAR_LLM_MODEL=gpt-4.1-mini
+set FRAUDWAR_CASE_SUMMARY_MODEL=gpt-4.1-mini
 ```
 
 Check configuration without making a provider call:
@@ -55,5 +55,5 @@ configured or returns an error, FraudWar Room falls back to deterministic text.
 Safety boundary:
 
 > FraudWar Room uses synthetic data and abstract adversarial behavior for defensive research,
-> analytics, and portfolio demonstration. It is not a guide to committing fraud and must not
+> analytics, and product testing. It is not a guide to committing fraud and must not
 > be used to facilitate abuse.

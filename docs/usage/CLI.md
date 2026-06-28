@@ -19,9 +19,9 @@ fraudwar run-all
 fraudwar serve
 ```
 
-`generate_world.py` defaults to the portfolio-scale synthetic world of 10,000 accounts,
+`generate_world.py` defaults to a larger synthetic world of 10,000 accounts,
 500 merchants, 100,000 transactions, and 10 rings. The dashboard demo export intentionally
 uses a smaller run so UI checks remain fast.
 
-Optional GNN and LLM setup is documented in
-`docs/usage/OPTIONAL_GNN_AND_LLM.md`.
+Optional graph modeling and case-summary setup is documented in
+`docs/usage/OPTIONAL_MODELING_AND_SUMMARIES.md`.

@@ -11,6 +11,5 @@ npm run dev
 
 Open http://localhost:3000.
 
-The first screen is the command center with executive metrics, graph evidence, ring timeline,
-case queue, defense comparison, and after-action report summary.
-
+The first screen shows loss, recall, queue pressure, graph evidence, ring activity, the case
+queue, defense results, and the run memo.

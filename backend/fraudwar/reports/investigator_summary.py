@@ -22,37 +22,42 @@ def summarize_case(
     graph_neighbors: list[str] | None = None,
     provider: str | None = None,
 ) -> dict[str, str | bool]:
-    """Return a safe investigator summary with optional provider backing.
+    """Return a safe investigator summary.
 
-    Provider calls are opt-in. Set `FRAUDWAR_ENABLE_LLM_SUMMARIES=1`,
-    `FRAUDWAR_LLM_PROVIDER=openai`, and `OPENAI_API_KEY` to use OpenAI Responses API.
-    Without those variables, this function returns deterministic local text.
+    Provider calls are opt-in. Set `FRAUDWAR_ENABLE_CASE_SUMMARIES=1`,
+    `FRAUDWAR_CASE_SUMMARY_PROVIDER=openai`, and `OPENAI_API_KEY` to use a remote
+    drafting provider. Without those variables, this function returns deterministic
+    local text.
     """
 
-    selected_provider = (provider or os.getenv("FRAUDWAR_LLM_PROVIDER") or "deterministic").lower()
-    enabled = os.getenv("FRAUDWAR_ENABLE_LLM_SUMMARIES") == "1"
+    selected_provider = (
+        provider
+        or os.getenv("FRAUDWAR_CASE_SUMMARY_PROVIDER")
+        or "deterministic"
+    ).lower()
+    enabled = os.getenv("FRAUDWAR_ENABLE_CASE_SUMMARIES") == "1"
     fallback = _deterministic_summary(case, graph_neighbors)
     if not enabled or selected_provider == "deterministic":
         return fallback
     if selected_provider == "openai":
         try:
             return _openai_summary(case, graph_neighbors)
-        except LLMProviderError as exc:
+        except SummaryProviderError as exc:
             return {
                 **fallback,
-                "llm_enabled": False,
+                "provider_enabled": False,
                 "provider": "openai",
                 "provider_error": str(exc),
             }
     return {
         **fallback,
-        "llm_enabled": False,
+        "provider_enabled": False,
         "provider": selected_provider,
-        "provider_error": f"Unsupported LLM provider: {selected_provider}",
+        "provider_error": f"Unsupported summary provider: {selected_provider}",
     }
 
 
-class LLMProviderError(RuntimeError):
+class SummaryProviderError(RuntimeError):
     """Raised when an optional summary provider cannot return a safe response."""
 
 
@@ -68,7 +73,7 @@ def _deterministic_summary(
         f"{neighbors}. Recommended action: {case.get('recommended_action')}."
     )
     return {
-        "llm_enabled": False,
+        "provider_enabled": False,
         "provider": "deterministic",
         "summary": summary,
         "safety_note": "Synthetic case summary only; no real customer or fraud-enablement data.",
@@ -78,8 +83,8 @@ def _deterministic_summary(
 def _openai_summary(case: dict, graph_neighbors: list[str] | None = None) -> dict[str, str | bool]:
     api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
-        raise LLMProviderError("OPENAI_API_KEY is not set.")
-    model = os.getenv("FRAUDWAR_LLM_MODEL", "gpt-4.1-mini")
+        raise SummaryProviderError("OPENAI_API_KEY is not set.")
+    model = os.getenv("FRAUDWAR_CASE_SUMMARY_MODEL", "gpt-4.1-mini")
     payload = {
         "model": model,
         "input": [
@@ -117,14 +122,14 @@ def _openai_summary(case: dict, graph_neighbors: list[str] | None = None) -> dic
             body = json.loads(response.read().decode("utf-8"))
     except urllib.error.HTTPError as exc:
         detail = exc.read().decode("utf-8", errors="replace")
-        raise LLMProviderError(f"OpenAI request failed with HTTP {exc.code}: {detail[:240]}") from exc
+        raise SummaryProviderError(f"OpenAI request failed with HTTP {exc.code}: {detail[:240]}") from exc
     except urllib.error.URLError as exc:
-        raise LLMProviderError(f"OpenAI request failed: {exc}") from exc
+        raise SummaryProviderError(f"OpenAI request failed: {exc}") from exc
     text = _extract_response_text(body)
     if not text:
-        raise LLMProviderError("OpenAI response did not include output text.")
+        raise SummaryProviderError("OpenAI response did not include output text.")
     return {
-        "llm_enabled": True,
+        "provider_enabled": True,
         "provider": "openai",
         "summary": text.strip(),
         "safety_note": "Synthetic case summary only; no real customer or fraud-enablement data.",
@@ -162,4 +167,3 @@ def _extract_response_text(body: dict[str, Any]) -> str:
             if content.get("type") in {"output_text", "text"} and isinstance(content.get("text"), str):
                 chunks.append(content["text"])
     return "\n".join(chunks)
-

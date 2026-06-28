@@ -40,7 +40,7 @@ class PyGGraphNeuralNetwork:
     """Optional PyTorch Geometric account-level GCN defense.
 
     This is a real GNN implementation path, but it is deliberately optional because PyTorch
-    and PyTorch Geometric are heavyweight dependencies for a portfolio demo. Install the
+    and PyTorch Geometric are heavyweight dependencies for the default local run. Install the
     `gnn` extra to use it:
 
     ```bash
@@ -197,4 +197,3 @@ class _AccountGCN:
                 return x
 
         return AccountGCN()
-

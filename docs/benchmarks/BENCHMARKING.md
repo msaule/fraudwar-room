@@ -15,7 +15,7 @@ data/benchmarks/benchmark_summary.json
 ```
 
 The default benchmark is intentionally smaller than the full 10,000-account generator so it
-can run during local portfolio prep. Use larger arguments for deeper analysis:
+can run quickly on a laptop. Use larger arguments for deeper analysis:
 
 ```bash
 python scripts/benchmark_experiments.py --seeds 1,2,3,4,5 --accounts 2500 --transactions 12000
