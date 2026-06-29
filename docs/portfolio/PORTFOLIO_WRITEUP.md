@@ -13,10 +13,22 @@ transactions, refunds, chargebacks, synthetic rings, alerts, cases, and investig
 Rings adapt abstractly after detection, and defenses are compared through the FraudArena
 environment.
 
+The public dashboard is hosted on GitHub Pages:
+
+https://msaule.github.io/fraudwar-room/
+
+GitHub Pages serves the static demo build. Live scenario runs, run history, benchmark jobs,
+and SQLite persistence run through the local FastAPI service.
+
 ## Technical Architecture
 
 - Python simulation package.
-- FastAPI endpoints.
+- FastAPI endpoints for experiments, scenario jobs, run history, benchmark reports, cases,
+  rings, graph evidence, and health checks.
+- Background scenario and benchmark jobs with run IDs, status polling, structured logs, and
+  failure states.
+- SQLite persistence for run payloads, metrics, report paths, job status, and benchmark
+  summaries.
 - NetworkX graph evidence.
 - scikit-learn transaction and graph-feature models.
 - Investigator queue and cost model.
@@ -47,8 +59,15 @@ environment.
   recall, time-to-detection, and adversarial half-life.
 - Built a dashboard with graph evidence, active ring timelines, case queues, defense
   results, and run memos.
+- Added a working FastAPI run flow: the UI starts scenario jobs, polls status, persists
+  results to SQLite, and shows prior runs with seeds, configs, metrics, and report links.
+- Added multi-seed benchmark reporting to show variance in recall decay, backlog, ring
+  recall, and investigator ROI.
 
 ## Limitations
 
 The simulator is not a calibrated production model. It uses synthetic assumptions and should
 be reviewed as a benchmark environment, not as a real fraud-control system.
+
+The hosted GitHub Pages build is frontend-only. To run new scenarios from the UI, start the
+FastAPI backend locally and set `NEXT_PUBLIC_API_BASE_URL`.
