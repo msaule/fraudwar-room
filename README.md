@@ -181,12 +181,16 @@ and strategy robustness index.
 The Next.js dashboard includes:
 
 - Loss, recall, queue, and ROI metrics.
+- Scenario selector for the implemented benchmark runs.
 - Evidence map.
+- Click-through evidence drawer for graph nodes and case rows.
 - Event log.
 - Ring table.
 - Case queue.
 - Defense result charts.
+- Defense rationale table.
 - Decision memo.
+- Limitations panel.
 - Methodology and safety boundary.
 
 ## Reports

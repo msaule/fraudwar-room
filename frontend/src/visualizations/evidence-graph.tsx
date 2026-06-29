@@ -8,18 +8,34 @@ type Graph = {
   edges: Array<{ source: string; target: string; type: string }>
 }
 
-export function EvidenceGraph({ graph }: { graph: Graph }) {
+export function EvidenceGraph({
+  graph,
+  selectedId,
+  hoverId,
+  onSelectNode,
+  onHoverNode
+}: {
+  graph: Graph
+  selectedId?: string | null
+  hoverId?: string | null
+  onSelectNode?: (id: string) => void
+  onHoverNode?: (id: string | null) => void
+}) {
   const [mounted, setMounted] = useState(false)
   useEffect(() => setMounted(true), [])
 
   const { nodes, edges } = useMemo(() => {
     const displayed = selectEvidenceNodes(graph)
+    const focusId = hoverId || selectedId || null
+    const related = focusId ? connectedNodeIds(graph, focusId) : new Set<string>()
     const laneCounts = new Map<string, number>()
     const nodes: Node[] = displayed.map((node) => {
       const lane = laneForType(node.type)
       const row = laneCounts.get(lane) ?? 0
       laneCounts.set(lane, row + 1)
       const laneSize = displayed.filter((item) => laneForType(item.type) === lane).length
+      const isFocused = focusId === node.id
+      const isRelated = related.has(node.id)
       return {
         id: node.id,
         data: { label: shortLabel(node.id, node.type) },
@@ -28,7 +44,12 @@ export function EvidenceGraph({ graph }: { graph: Graph }) {
           y: laneY(row, laneSize, lane)
         },
         type: 'default',
-        className: `${node.type} lane-${lane}`,
+        className: [
+          node.type,
+          `lane-${lane}`,
+          isFocused ? 'is-selected' : '',
+          focusId && !isRelated ? 'is-muted' : ''
+        ].filter(Boolean).join(' '),
         draggable: true,
         style: { width: node.type === 'account' ? 122 : 136 }
       }
@@ -43,10 +64,14 @@ export function EvidenceGraph({ graph }: { graph: Graph }) {
         target: edge.target,
         animated: edge.type.includes('case') || edge.type.includes('ring'),
         type: 'smoothstep',
-        className: edgeClass(edge.type)
+        className: [
+          edgeClass(edge.type),
+          focusId && edge.source !== focusId && edge.target !== focusId ? 'is-muted' : '',
+          focusId && (edge.source === focusId || edge.target === focusId) ? 'is-selected' : ''
+        ].filter(Boolean).join(' ')
       }))
     return { nodes, edges }
-  }, [graph])
+  }, [graph, selectedId, hoverId])
 
   if (!mounted) {
     return <div aria-label="Loading graph evidence" />
@@ -67,6 +92,9 @@ export function EvidenceGraph({ graph }: { graph: Graph }) {
         fitView
         minZoom={0.25}
         maxZoom={1.55}
+        onNodeClick={(_, node) => onSelectNode?.(node.id)}
+        onNodeMouseEnter={(_, node) => onHoverNode?.(node.id)}
+        onNodeMouseLeave={() => onHoverNode?.(null)}
         proOptions={{ hideAttribution: true }}
       >
         <Background color="#242b35" gap={24} />
@@ -74,6 +102,19 @@ export function EvidenceGraph({ graph }: { graph: Graph }) {
       </ReactFlow>
     </div>
   )
+}
+
+function connectedNodeIds(graph: Graph, focusId: string) {
+  const related = new Set<string>([focusId])
+  for (const edge of graph.edges) {
+    if (edge.source === focusId) {
+      related.add(edge.target)
+    }
+    if (edge.target === focusId) {
+      related.add(edge.source)
+    }
+  }
+  return related
 }
 
 function selectEvidenceNodes(graph: Graph) {
