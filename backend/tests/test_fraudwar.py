@@ -2,6 +2,9 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from fastapi import BackgroundTasks
+
+import fraudwar.main as api_main
 from fraudwar.adaptation.engine import adapt_rings
 from fraudwar.arena.environment import run_experiment
 from fraudwar.defenses.active_learning import active_learning_scores
@@ -110,6 +113,44 @@ def test_active_learning_and_adaptive_thresholding() -> None:
 
 def test_api_health() -> None:
     assert health()["status"] == "ok"
+
+
+def test_api_jobs_history_and_benchmark(tmp_path: Path, monkeypatch) -> None:
+    monkeypatch.setattr(api_main, "DATA_DIR", tmp_path)
+    monkeypatch.setattr(api_main, "DB_PATH", tmp_path / "fraudwar.sqlite")
+    run_request = api_main.RunScenarioRequest(
+        experiment_id="static-vs-adaptive",
+        seed=31,
+        accounts=120,
+        merchants=20,
+        transactions=450,
+        rings=2,
+        days=12,
+    )
+    started = api_main.start_run(run_request, BackgroundTasks())
+    api_main._run_scenario_job(started["job_id"], run_request.model_dump())
+    job = api_main.job_status(started["job_id"])
+    assert job["status"] == "succeeded"
+    assert job["run_id"]
+    history = api_main.get_run_history()
+    assert history
+    assert history[0]["run_id"] == job["run_id"]
+
+    benchmark_request = api_main.BenchmarkRequest(
+        seeds=[31],
+        experiment_ids=["static-vs-adaptive"],
+        accounts=120,
+        merchants=20,
+        transactions=450,
+        rings=2,
+        days=12,
+    )
+    benchmark_started = api_main.start_benchmark(benchmark_request, BackgroundTasks())
+    api_main._run_benchmark_job(benchmark_started["job_id"], benchmark_request.model_dump())
+    benchmark_job = api_main.job_status(benchmark_started["job_id"])
+    assert benchmark_job["status"] == "succeeded"
+    benchmark = api_main.get_latest_benchmark()
+    assert benchmark["summary"][0]["runs"] == 1
 
 
 def test_optional_gnn_dependency_path() -> None:

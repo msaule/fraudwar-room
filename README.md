@@ -216,6 +216,47 @@ data/generated/fraudwar.sqlite
 The persistence layer uses SQLAlchemy over local SQLite so the API can load previously
 generated runs without requiring an external database.
 
+## Systems Design
+
+API shape:
+
+- `POST /runs/start` creates a background scenario job.
+- `GET /jobs/{job_id}` returns job status, run ID, result summary, and errors.
+- `GET /runs/history` lists persisted SQLite runs with seed, config, metrics, and report paths.
+- `GET /runs/{run_id}` loads the full run payload.
+- `POST /benchmarks/start` runs a multi-seed benchmark job.
+- `GET /benchmarks/latest` returns the latest benchmark summary.
+
+Data model:
+
+- `simulation_runs`: run metadata and full run payload.
+- `entity_records`: generated entities, alerts, cases, timeline entries, and graph payloads.
+- `metric_records`: metric namespace, metric name, and value.
+- `report_records`: JSON, Markdown, and HTML report paths.
+- `simulation_jobs`: queued, running, succeeded, or failed background jobs.
+- `benchmark_reports`: multi-seed benchmark summaries.
+
+Async job flow:
+
+1. The UI posts a scenario or benchmark request.
+2. FastAPI creates a job row and returns a job ID.
+3. A background task runs the simulator, writes JSON reports, persists SQLite rows, and marks
+   the job succeeded or failed.
+4. The UI polls job status, then loads the persisted run or benchmark report.
+
+Scaling limits and next steps:
+
+- Local SQLite is fine for the hosted static demo and local API. A multi-user version should use Postgres for run
+  metadata and object storage for large graph/report payloads.
+- FastAPI background tasks are process-local. A production version should use a durable queue
+  and worker so jobs can survive restarts.
+- Large benchmark runs should be sharded by seed and experiment ID, then reduced into one
+  benchmark summary.
+- Cache read-only run payloads and report responses by run ID. Invalidate only when a run is
+  replaced or deleted.
+- Failure modes to handle explicitly: bad scenario config, job timeout, worker crash, partial
+  report write, API outage, and frontend API misconfiguration.
+
 ## Safety and Ethics
 
 This project is defensive and synthetic only. It must not contain or be used for:

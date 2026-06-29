@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import {
   AlertTriangle,
   BarChart3,
@@ -25,6 +25,7 @@ import {
   YAxis
 } from 'recharts'
 import dynamic from 'next/dynamic'
+import Link from 'next/link'
 import { compact, money, pct } from '@/lib/format'
 
 const EvidenceGraph = dynamic(
@@ -103,13 +104,70 @@ type EvidenceSelection = {
   id: string
 }
 
-export function Dashboard({ run, view = 'command' }: { run: Run; view?: View }) {
+type JobStatus = {
+  job_id: string
+  job_type: string
+  status: 'queued' | 'running' | 'succeeded' | 'failed'
+  run_id?: string | null
+  result?: any
+  error?: string | null
+}
+
+type RunHistoryRow = {
+  run_id: string
+  experiment_name: string
+  experiment_id: string
+  seed: number
+  days: number
+  defense_name: string
+  created_at: string
+  metrics: {
+    recall_decay: number
+    backlog: number
+    ring_level_recall: number
+    investigator_roi: number
+  }
+  reports?: Record<string, string>
+}
+
+type BenchmarkReport = {
+  benchmark_id: string
+  seeds: number[]
+  summary: Array<{
+    experiment_id: string
+    experiment_name: string
+    runs: number
+    recall_decay: MetricSpread
+    backlog: MetricSpread
+    ring_level_recall: MetricSpread
+    investigator_roi: MetricSpread
+  }>
+}
+
+type MetricSpread = {
+  mean: number
+  min: number
+  max: number
+}
+
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL ?? (
+  process.env.NODE_ENV === 'development' ? 'http://localhost:8000' : ''
+)
+
+export function Dashboard({ run: initialRun, view = 'command' }: { run: Run; view?: View }) {
+  const [run, setRun] = useState(initialRun)
   const metrics = run.metrics
   const [dayLimit, setDayLimit] = useState(run.days ?? 30)
   const [ringFilter, setRingFilter] = useState('all')
   const [threshold, setThreshold] = useState(46)
   const [alertBudget, setAlertBudget] = useState(72)
   const [scenarioId, setScenarioId] = useState('static-vs-adaptive')
+  const [runSeed, setRunSeed] = useState(42)
+  const [benchmarkSeeds, setBenchmarkSeeds] = useState('11,42,99,123,202')
+  const [jobStatus, setJobStatus] = useState<JobStatus | null>(null)
+  const [apiError, setApiError] = useState<string | null>(null)
+  const [runHistory, setRunHistory] = useState<RunHistoryRow[]>([])
+  const [benchmark, setBenchmark] = useState<BenchmarkReport | null>(null)
   const [selectedEvidence, setSelectedEvidence] = useState<EvidenceSelection | null>(null)
   const [hoveredNodeId, setHoveredNodeId] = useState<string | null>(null)
   const timeline = run.timeline.filter((event) => event.day <= dayLimit).slice(0, 24)
@@ -128,6 +186,110 @@ export function Dashboard({ run, view = 'command' }: { run: Run; view?: View }) 
     Math.round((run.defense_comparison.find((row) => row.defense.includes('graph'))?.alerts ?? 0) * (100 - threshold) / 54)
   )
   const selectedNodeId = selectedEvidence?.kind === 'node' ? selectedEvidence.id : selectedEvidence?.id ?? null
+  const hasApi = Boolean(API_BASE)
+  const isJobRunning = jobStatus?.status === 'queued' || jobStatus?.status === 'running'
+
+  useEffect(() => {
+    let cancelled = false
+    async function loadApiState() {
+      if (!hasApi) {
+        setApiError('Static demo mode. Start the FastAPI service locally to run scenarios.')
+        return
+      }
+      try {
+        const history = await apiGet<RunHistoryRow[]>('/runs/history')
+        if (cancelled) return
+        setRunHistory(history)
+        if (history[0]) {
+          const latest = await apiGet<Run>(`/runs/${history[0].run_id}`)
+          if (!cancelled) {
+            setRun(latest)
+            setDayLimit(latest.days ?? 30)
+          }
+        }
+        const latestBenchmark = await apiGet<BenchmarkReport>('/benchmarks/latest').catch(() => null)
+        if (!cancelled && latestBenchmark) {
+          setBenchmark(latestBenchmark)
+        }
+        if (!cancelled) {
+          setApiError(null)
+        }
+      } catch {
+        if (!cancelled) {
+          setApiError('API unavailable. Showing bundled demo data.')
+        }
+      }
+    }
+    loadApiState()
+    return () => {
+      cancelled = true
+    }
+  }, [hasApi])
+
+  async function runScenario() {
+    if (!hasApi) {
+      setApiError('Scenario runs need the FastAPI service. The GitHub Pages build is static.')
+      return
+    }
+    setApiError(null)
+    setJobStatus({ job_id: 'pending', job_type: 'scenario_run', status: 'queued' })
+    try {
+      const started = await apiPost<JobStatus>('/runs/start', {
+        experiment_id: scenarioId,
+        seed: runSeed,
+        accounts: 450,
+        merchants: 55,
+        transactions: 1800,
+        rings: 4,
+        days: 20
+      })
+      await pollJob(started.job_id, async (job) => {
+        setJobStatus(job)
+        if (job.status === 'succeeded' && job.run_id) {
+          const nextRun = await apiGet<Run>(`/runs/${job.run_id}`)
+          const history = await apiGet<RunHistoryRow[]>('/runs/history')
+          setRun(nextRun)
+          setRunHistory(history)
+          setDayLimit(nextRun.days ?? 30)
+        }
+      })
+    } catch (error) {
+      setJobStatus(null)
+      setApiError(error instanceof Error ? error.message : 'Run failed.')
+    }
+  }
+
+  async function runBenchmark() {
+    if (!hasApi) {
+      setApiError('Benchmarks need the FastAPI service. The GitHub Pages build is static.')
+      return
+    }
+    setApiError(null)
+    setJobStatus({ job_id: 'pending', job_type: 'benchmark', status: 'queued' })
+    try {
+      const seeds = benchmarkSeeds.split(',').map((seed) => Number(seed.trim())).filter(Number.isFinite)
+      const started = await apiPost<JobStatus>('/benchmarks/start', {
+        seeds,
+        experiment_ids: ['static-vs-adaptive', 'graph-vs-transaction', 'investigator-overload', 'ring-takedown'],
+        accounts: 600,
+        merchants: 70,
+        transactions: 2400,
+        rings: 5,
+        days: 24
+      })
+      await pollJob(started.job_id, async (job) => {
+        setJobStatus(job)
+        if (job.status === 'succeeded') {
+          const report = await apiGet<BenchmarkReport>('/benchmarks/latest')
+          setBenchmark(report)
+          setRunHistory(await apiGet<RunHistoryRow[]>('/runs/history'))
+        }
+      })
+    } catch (error) {
+      setJobStatus(null)
+      setApiError(error instanceof Error ? error.message : 'Benchmark failed.')
+    }
+  }
 
   function selectGraphNode(id: string) {
     const node = run.graph.nodes.find((item) => item.id === id)
@@ -146,14 +308,14 @@ export function Dashboard({ run, view = 'command' }: { run: Run; view?: View }) 
           <span>Loss, ring recall, review queue</span>
         </div>
         <nav className="nav">
-          <a className={view === 'command' ? 'active' : ''} href="/"><Radar size={16} /> Overview</a>
-          <a className={view === 'battlefield' ? 'active' : ''} href="/battlefield"><Network size={16} /> Evidence Map</a>
-          <a className={view === 'rings' ? 'active' : ''} href="/rings"><GitBranch size={16} /> Rings</a>
-          <a className={view === 'cases' ? 'active' : ''} href="/cases"><BriefcaseBusiness size={16} /> Cases</a>
-          <a className={view === 'experiments' ? 'active' : ''} href="/experiments"><BarChart3 size={16} /> Experiments</a>
-          <a className={view === 'defense-lab' ? 'active' : ''} href="/defense-lab"><BarChart3 size={16} /> Defense Tests</a>
-          <a className={view === 'after-action' ? 'active' : ''} href="/after-action"><FileText size={16} /> Run Memo</a>
-          <a className={view === 'methodology' ? 'active' : ''} href="/methodology"><ShieldCheck size={16} /> Methodology</a>
+          <Link className={view === 'command' ? 'active' : ''} href="/"><Radar size={16} /> Overview</Link>
+          <Link className={view === 'battlefield' ? 'active' : ''} href="/battlefield"><Network size={16} /> Evidence Map</Link>
+          <Link className={view === 'rings' ? 'active' : ''} href="/rings"><GitBranch size={16} /> Rings</Link>
+          <Link className={view === 'cases' ? 'active' : ''} href="/cases"><BriefcaseBusiness size={16} /> Cases</Link>
+          <Link className={view === 'experiments' ? 'active' : ''} href="/experiments"><BarChart3 size={16} /> Experiments</Link>
+          <Link className={view === 'defense-lab' ? 'active' : ''} href="/defense-lab"><BarChart3 size={16} /> Defense Tests</Link>
+          <Link className={view === 'after-action' ? 'active' : ''} href="/after-action"><FileText size={16} /> Run Memo</Link>
+          <Link className={view === 'methodology' ? 'active' : ''} href="/methodology"><ShieldCheck size={16} /> Methodology</Link>
         </nav>
       </aside>
       <main className="main" id="command">
@@ -179,7 +341,19 @@ export function Dashboard({ run, view = 'command' }: { run: Run; view?: View }) 
             selectedScenario={selectedScenario}
             value={scenarioId}
             onChange={setScenarioId}
+            seed={runSeed}
+            onSeedChange={setRunSeed}
+            onRun={runScenario}
+            isRunning={isJobRunning && jobStatus?.job_type === 'scenario_run'}
+            hasApi={hasApi}
           />
+
+          {(apiError || jobStatus) && (
+            <div className={apiError ? 'run-status error' : 'run-status'}>
+              <strong>{apiError ? 'Backend' : jobStatus?.job_type === 'benchmark' ? 'Benchmark job' : 'Scenario job'}</strong>
+              <span>{apiError ?? `${jobStatus?.status ?? 'queued'}${jobStatus?.run_id ? ` | ${jobStatus.run_id}` : ''}`}</span>
+            </div>
+          )}
 
           {view === 'battlefield' && (
             <>
@@ -351,6 +525,25 @@ export function Dashboard({ run, view = 'command' }: { run: Run; view?: View }) 
 
           {(view === 'command' || view === 'defense-lab' || view === 'experiments') && (
             <DefenseRationale run={run} />
+          )}
+
+          {(view === 'command' || view === 'experiments') && (
+            <RunHistoryPanel history={runHistory} activeRunId={run.run_id} onSelectRun={async (runId) => {
+              const selectedRun = await apiGet<Run>(`/runs/${runId}`)
+              setRun(selectedRun)
+              setDayLimit(selectedRun.days ?? 30)
+            }} />
+          )}
+
+          {(view === 'command' || view === 'experiments' || view === 'defense-lab') && (
+            <BenchmarkPanel
+              benchmark={benchmark}
+              seeds={benchmarkSeeds}
+              onSeedsChange={setBenchmarkSeeds}
+              onRunBenchmark={runBenchmark}
+              isRunning={isJobRunning && jobStatus?.job_type === 'benchmark'}
+              hasApi={hasApi}
+            />
           )}
 
           {view === 'defense-lab' && (
@@ -551,12 +744,22 @@ function ScenarioSelector({
   scenarios,
   selectedScenario,
   value,
-  onChange
+  onChange,
+  seed,
+  onSeedChange,
+  onRun,
+  isRunning,
+  hasApi
 }: {
   scenarios: ReturnType<typeof scenarioRows>
   selectedScenario: ReturnType<typeof scenarioRows>[number]
   value: string
   onChange: (value: string) => void
+  seed: number
+  onSeedChange: (value: number) => void
+  onRun: () => void
+  isRunning: boolean
+  hasApi: boolean
 }) {
   return (
     <section className="scenario-panel" aria-label="Scenario selector">
@@ -567,6 +770,15 @@ function ScenarioSelector({
             <option key={scenario.id} value={scenario.id}>{scenario.name}</option>
           ))}
         </select>
+      </label>
+      <label>
+        Seed
+        <input
+          min="1"
+          type="number"
+          value={seed}
+          onChange={(event) => onSeedChange(Number(event.target.value))}
+        />
       </label>
       <div>
         <strong>{selectedScenario.question}</strong>
@@ -582,6 +794,132 @@ function ScenarioSelector({
           <dd>{selectedScenario.status}</dd>
         </div>
       </dl>
+      <button disabled={isRunning || !hasApi} onClick={onRun} type="button">
+        {isRunning ? 'Running' : hasApi ? 'Run scenario' : 'Local API needed'}
+      </button>
+    </section>
+  )
+}
+
+function RunHistoryPanel({
+  history,
+  activeRunId,
+  onSelectRun
+}: {
+  history: RunHistoryRow[]
+  activeRunId: string
+  onSelectRun: (runId: string) => void
+}) {
+  return (
+    <section className="panel">
+      <div className="panel-header">
+        <h2>Run History</h2>
+        <span>{history.length ? `${history.length} persisted runs` : 'SQLite history appears when the API is running'}</span>
+      </div>
+      <div className="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Run</th>
+              <th>Experiment</th>
+              <th>Seed</th>
+              <th>Recall decay</th>
+              <th>Backlog</th>
+              <th>Ring recall</th>
+              <th>ROI/hr</th>
+            </tr>
+          </thead>
+          <tbody>
+            {(history.length ? history : []).slice(0, 12).map((row) => (
+              <tr
+                className={row.run_id === activeRunId ? 'selected-row' : ''}
+                key={row.run_id}
+                onClick={() => onSelectRun(row.run_id)}
+                role="button"
+                tabIndex={0}
+              >
+                <td>{row.run_id}</td>
+                <td>{row.experiment_name}</td>
+                <td>{row.seed}</td>
+                <td>{pct(row.metrics.recall_decay)}</td>
+                <td>{compact(row.metrics.backlog)}</td>
+                <td>{pct(row.metrics.ring_level_recall)}</td>
+                <td>{money(row.metrics.investigator_roi)}</td>
+              </tr>
+            ))}
+            {!history.length && (
+              <tr>
+                <td colSpan={7}>Start FastAPI and run a scenario to populate local history.</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  )
+}
+
+function BenchmarkPanel({
+  benchmark,
+  seeds,
+  onSeedsChange,
+  onRunBenchmark,
+  isRunning,
+  hasApi
+}: {
+  benchmark: BenchmarkReport | null
+  seeds: string
+  onSeedsChange: (value: string) => void
+  onRunBenchmark: () => void
+  isRunning: boolean
+  hasApi: boolean
+}) {
+  return (
+    <section className="panel">
+      <div className="panel-header">
+        <h2>Benchmark Variance</h2>
+        <span>{benchmark ? `${benchmark.seeds.length} seeds` : 'multi-seed report'}</span>
+      </div>
+      <div className="benchmark-controls">
+        <label>
+          Seeds
+          <input value={seeds} onChange={(event) => onSeedsChange(event.target.value)} />
+        </label>
+        <button disabled={isRunning || !hasApi} onClick={onRunBenchmark} type="button">
+          {isRunning ? 'Running' : hasApi ? 'Run benchmark' : 'Local API needed'}
+        </button>
+      </div>
+      <div className="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Experiment</th>
+              <th>Runs</th>
+              <th>Recall decay</th>
+              <th>Backlog</th>
+              <th>Ring recall</th>
+              <th>ROI/hr</th>
+            </tr>
+          </thead>
+          <tbody>
+            {(benchmark?.summary ?? []).map((row) => (
+              <tr key={row.experiment_id}>
+                <td>{row.experiment_name}</td>
+                <td>{row.runs}</td>
+                <td>{spread(row.recall_decay, pct)}</td>
+                <td>{spread(row.backlog, compact)}</td>
+                <td>{spread(row.ring_level_recall, pct)}</td>
+                <td>{spread(row.investigator_roi, money)}</td>
+              </tr>
+            ))}
+            {!benchmark?.summary?.length && (
+              <tr>
+                <td colSpan={6}>Run a benchmark to see mean and range across seeds.</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
     </section>
   )
 }
@@ -713,6 +1051,42 @@ function buildDecaySeries(adversarial: Record<string, number>) {
     day: i + 1,
     recall: Number((start + (end - start) * (i / 11)).toFixed(3))
   }))
+}
+
+async function apiGet<T>(path: string): Promise<T> {
+  const response = await fetch(`${API_BASE}${path}`)
+  if (!response.ok) {
+    throw new Error(`GET ${path} failed with ${response.status}`)
+  }
+  return response.json() as Promise<T>
+}
+
+async function apiPost<T>(path: string, body: unknown): Promise<T> {
+  const response = await fetch(`${API_BASE}${path}`, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(body)
+  })
+  if (!response.ok) {
+    throw new Error(`POST ${path} failed with ${response.status}`)
+  }
+  return response.json() as Promise<T>
+}
+
+async function pollJob(jobId: string, onUpdate: (job: JobStatus) => Promise<void> | void) {
+  for (let attempt = 0; attempt < 120; attempt += 1) {
+    const job = await apiGet<JobStatus>(`/jobs/${jobId}`)
+    await onUpdate(job)
+    if (job.status === 'succeeded' || job.status === 'failed') {
+      return job
+    }
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+  }
+  throw new Error('Job did not finish before the polling timeout.')
+}
+
+function spread(metric: MetricSpread, formatter: (value: number) => string) {
+  return `${formatter(metric.mean)} (${formatter(metric.min)}-${formatter(metric.max)})`
 }
 
 function scenarioRows(run: Run) {

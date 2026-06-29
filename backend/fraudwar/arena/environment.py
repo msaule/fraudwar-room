@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import json
+import statistics
+from datetime import UTC, datetime
 from pathlib import Path
 
 from fraudwar.adaptation.engine import adapt_rings
@@ -42,9 +44,16 @@ def run_experiment(
     transactions: int = 4500,
     rings: int = 5,
     days: int = 30,
+    run_id_suffix: str | None = None,
 ) -> dict:
     world = generate_world(seed, accounts, merchants, transactions, rings, days)
-    run = evaluate_world(world, experiment_id=experiment_id, seed=seed, days=days)
+    run = evaluate_world(
+        world,
+        experiment_id=experiment_id,
+        seed=seed,
+        days=days,
+        run_id_suffix=run_id_suffix,
+    )
     output_path = Path(output_dir)
     output_path.mkdir(parents=True, exist_ok=True)
     run_path = output_path / f"{run['run_id']}.json"
@@ -54,7 +63,13 @@ def run_experiment(
     return run
 
 
-def evaluate_world(world: SyntheticWorld, experiment_id: str, seed: int, days: int) -> dict:
+def evaluate_world(
+    world: SyntheticWorld,
+    experiment_id: str,
+    seed: int,
+    days: int,
+    run_id_suffix: str | None = None,
+) -> dict:
     train_cutoff = max(7, days // 3)
     train = [tx for tx in world.transactions if tx.day < train_cutoff]
     test = [tx for tx in world.transactions if tx.day >= train_cutoff]
@@ -133,7 +148,8 @@ def evaluate_world(world: SyntheticWorld, experiment_id: str, seed: int, days: i
         account_changes=world.account_changes,
         cases=processed_cases,
     )
-    run_id = f"run_{experiment_id.replace('-', '_')}_{seed}"
+    suffix = run_id_suffix or datetime.now(UTC).strftime("%Y%m%d%H%M%S%f")
+    run_id = f"run_{experiment_id.replace('-', '_')}_{seed}_{suffix}"
     run = {
         "run_id": run_id,
         "experiment_id": experiment_id,
@@ -180,6 +196,51 @@ def evaluate_world(world: SyntheticWorld, experiment_id: str, seed: int, days: i
 
 def run_all(output_dir: Path | str = Path("data/generated")) -> list[dict]:
     return [run_experiment(experiment_id=experiment, seed=42, output_dir=output_dir) for experiment in EXPERIMENTS]
+
+
+def benchmark_experiments(
+    *,
+    seeds: list[int],
+    experiment_ids: list[str] | None = None,
+    output_dir: Path | str = Path("data/generated"),
+    accounts: int = 600,
+    merchants: int = 70,
+    transactions: int = 2400,
+    rings: int = 5,
+    days: int = 24,
+) -> dict:
+    experiments = experiment_ids or list(EXPERIMENTS)
+    rows = []
+    for experiment_id in experiments:
+        for seed in seeds:
+            run = run_experiment(
+                experiment_id=experiment_id,
+                seed=seed,
+                output_dir=Path(output_dir) / "benchmark_runs",
+                accounts=accounts,
+                merchants=merchants,
+                transactions=transactions,
+                rings=rings,
+                days=days,
+            )
+            rows.append(
+                {
+                    "experiment_id": experiment_id,
+                    "experiment_name": run["experiment_name"],
+                    "run_id": run["run_id"],
+                    "seed": seed,
+                    "recall_decay": run["metrics"]["adversarial"]["recall_decay"],
+                    "backlog": run["metrics"]["operations"]["backlog"],
+                    "ring_level_recall": run["metrics"]["graph"]["ring_level_recall"],
+                    "investigator_roi": run["metrics"]["financial"]["investigator_roi"],
+                }
+            )
+    return {
+        "benchmark_id": datetime.now(UTC).strftime("benchmark_%Y%m%d%H%M%S"),
+        "seeds": seeds,
+        "rows": rows,
+        "summary": _benchmark_summary(rows),
+    }
 
 
 def _threshold_for_experiment(experiment_id: str) -> float:
@@ -299,6 +360,36 @@ def _defense_comparison(
             }
         )
     return rows
+
+
+def _benchmark_summary(rows: list[dict]) -> list[dict]:
+    summary = []
+    by_experiment: dict[str, list[dict]] = {}
+    for row in rows:
+        by_experiment.setdefault(row["experiment_id"], []).append(row)
+    for experiment_id, experiment_rows in by_experiment.items():
+        item = {
+            "experiment_id": experiment_id,
+            "experiment_name": experiment_rows[0]["experiment_name"],
+            "runs": len(experiment_rows),
+        }
+        for metric in ["recall_decay", "backlog", "ring_level_recall", "investigator_roi"]:
+            values = [float(row[metric]) for row in experiment_rows if _is_finite(row[metric])]
+            item[metric] = {
+                "mean": round(statistics.fmean(values), 4) if values else 0.0,
+                "min": round(min(values), 4) if values else 0.0,
+                "max": round(max(values), 4) if values else 0.0,
+            }
+        summary.append(item)
+    return summary
+
+
+def _is_finite(value: object) -> bool:
+    try:
+        number = float(value)  # type: ignore[arg-type]
+    except (TypeError, ValueError):
+        return False
+    return number == number and number not in {float("inf"), float("-inf")}
 
 
 def _timeline(rings, alerts, adaptation_events) -> list[dict]:

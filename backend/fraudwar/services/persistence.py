@@ -44,6 +44,25 @@ CREATE TABLE IF NOT EXISTS report_records (
   path TEXT NOT NULL,
   PRIMARY KEY (run_id, format)
 );
+
+CREATE TABLE IF NOT EXISTS simulation_jobs (
+  job_id TEXT PRIMARY KEY,
+  job_type TEXT NOT NULL,
+  status TEXT NOT NULL,
+  run_id TEXT,
+  request_json TEXT NOT NULL,
+  result_json TEXT,
+  error TEXT,
+  created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+  updated_at TEXT DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS benchmark_reports (
+  benchmark_id TEXT PRIMARY KEY,
+  job_id TEXT,
+  payload_json TEXT NOT NULL,
+  created_at TEXT DEFAULT CURRENT_TIMESTAMP
+);
 """
 
 
@@ -126,6 +145,192 @@ def list_persisted_runs(db_path: Path | str) -> list[dict[str, str]]:
         }
         for row in rows
     ]
+
+
+def run_history(db_path: Path | str) -> list[dict]:
+    path = init_db(db_path)
+    with _engine(path).connect() as conn:
+        rows = conn.execute(
+            text("""
+            SELECT run_id, experiment_id, seed, days, defense_name, payload_json, created_at
+            FROM simulation_runs
+            ORDER BY created_at DESC
+            """)
+        ).all()
+        reports = conn.execute(
+            text("SELECT run_id, format, path FROM report_records")
+        ).all()
+    report_map: dict[str, dict[str, str]] = {}
+    for row in reports:
+        report_map.setdefault(row.run_id, {})[row.format] = row.path
+    history = []
+    for row in rows:
+        payload = json.loads(row.payload_json)
+        metrics = payload.get("metrics", {})
+        history.append(
+            {
+                "run_id": row.run_id,
+                "experiment_id": row.experiment_id,
+                "experiment_name": payload.get("experiment_name", row.experiment_id),
+                "seed": row.seed,
+                "days": row.days,
+                "defense_name": row.defense_name,
+                "created_at": row.created_at,
+                "metrics": {
+                    "recall_decay": metrics.get("adversarial", {}).get("recall_decay", 0),
+                    "backlog": metrics.get("operations", {}).get("backlog", 0),
+                    "ring_level_recall": metrics.get("graph", {}).get("ring_level_recall", 0),
+                    "investigator_roi": metrics.get("financial", {}).get("investigator_roi", 0),
+                },
+                "reports": report_map.get(row.run_id, {}),
+            }
+        )
+    return history
+
+
+def create_job(db_path: Path | str, job_id: str, job_type: str, request: dict) -> Path:
+    path = init_db(db_path)
+    with _engine(path).begin() as conn:
+        conn.execute(
+            text("""
+            INSERT INTO simulation_jobs (job_id, job_type, status, request_json)
+            VALUES (:job_id, :job_type, 'queued', :request_json)
+            """),
+            {
+                "job_id": job_id,
+                "job_type": job_type,
+                "request_json": json.dumps(request),
+            },
+        )
+    return path
+
+
+def update_job(
+    db_path: Path | str,
+    job_id: str,
+    *,
+    status: str,
+    run_id: str | None = None,
+    result: dict | None = None,
+    error: str | None = None,
+) -> None:
+    path = init_db(db_path)
+    with _engine(path).begin() as conn:
+        conn.execute(
+            text("""
+            UPDATE simulation_jobs
+            SET status = :status,
+                run_id = COALESCE(:run_id, run_id),
+                result_json = :result_json,
+                error = :error,
+                updated_at = CURRENT_TIMESTAMP
+            WHERE job_id = :job_id
+            """),
+            {
+                "job_id": job_id,
+                "status": status,
+                "run_id": run_id,
+                "result_json": json.dumps(result) if result is not None else None,
+                "error": error,
+            },
+        )
+
+
+def get_job(db_path: Path | str, job_id: str) -> dict | None:
+    path = init_db(db_path)
+    with _engine(path).connect() as conn:
+        row = conn.execute(
+            text("""
+            SELECT job_id, job_type, status, run_id, request_json, result_json, error, created_at, updated_at
+            FROM simulation_jobs
+            WHERE job_id = :job_id
+            """),
+            {"job_id": job_id},
+        ).first()
+    if not row:
+        return None
+    return {
+        "job_id": row.job_id,
+        "job_type": row.job_type,
+        "status": row.status,
+        "run_id": row.run_id,
+        "request": json.loads(row.request_json),
+        "result": json.loads(row.result_json) if row.result_json else None,
+        "error": row.error,
+        "created_at": row.created_at,
+        "updated_at": row.updated_at,
+    }
+
+
+def list_jobs(db_path: Path | str, limit: int = 20) -> list[dict]:
+    path = init_db(db_path)
+    with _engine(path).connect() as conn:
+        rows = conn.execute(
+            text("""
+            SELECT job_id, job_type, status, run_id, error, created_at, updated_at
+            FROM simulation_jobs
+            ORDER BY created_at DESC
+            LIMIT :limit
+            """),
+            {"limit": limit},
+        ).all()
+    return [
+        {
+            "job_id": row.job_id,
+            "job_type": row.job_type,
+            "status": row.status,
+            "run_id": row.run_id,
+            "error": row.error,
+            "created_at": row.created_at,
+            "updated_at": row.updated_at,
+        }
+        for row in rows
+    ]
+
+
+def mark_interrupted_jobs(db_path: Path | str) -> None:
+    path = init_db(db_path)
+    with _engine(path).begin() as conn:
+        conn.execute(
+            text("""
+            UPDATE simulation_jobs
+            SET status = 'failed',
+                error = 'Job was interrupted before completion.',
+                updated_at = CURRENT_TIMESTAMP
+            WHERE status IN ('queued', 'running')
+            """)
+        )
+
+
+def persist_benchmark(db_path: Path | str, benchmark_id: str, job_id: str, payload: dict) -> None:
+    path = init_db(db_path)
+    with _engine(path).begin() as conn:
+        conn.execute(
+            text("""
+            INSERT OR REPLACE INTO benchmark_reports
+            (benchmark_id, job_id, payload_json)
+            VALUES (:benchmark_id, :job_id, :payload_json)
+            """),
+            {
+                "benchmark_id": benchmark_id,
+                "job_id": job_id,
+                "payload_json": json.dumps(payload),
+            },
+        )
+
+
+def latest_benchmark(db_path: Path | str) -> dict | None:
+    path = init_db(db_path)
+    with _engine(path).connect() as conn:
+        row = conn.execute(
+            text("""
+            SELECT payload_json
+            FROM benchmark_reports
+            ORDER BY created_at DESC
+            LIMIT 1
+            """)
+        ).first()
+    return json.loads(row.payload_json) if row else None
 
 
 def _engine(db_path: Path | str) -> Engine:

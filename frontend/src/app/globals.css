@@ -35,6 +35,26 @@ select {
   font: inherit;
 }
 
+button {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #171c22;
+  color: var(--text);
+  min-height: 34px;
+  padding: 0 11px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #1d232b;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  color: var(--faint);
+  background: #14181d;
+}
+
 .shell {
   display: grid;
   grid-template-columns: 248px minmax(0, 1fr);
@@ -197,13 +217,24 @@ select {
   padding: 0 9px;
 }
 
+input[type='number'],
+input:not([type]) {
+  background: #11161b;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--text);
+  height: 34px;
+  padding: 0 9px;
+  width: 100%;
+}
+
 .scenario-panel {
   border: 1px solid var(--line);
   background: var(--surface);
   border-radius: 8px;
   padding: 12px;
   display: grid;
-  grid-template-columns: 240px minmax(0, 1fr) 280px;
+  grid-template-columns: 220px 90px minmax(0, 1fr) 260px 120px;
   gap: 14px;
   align-items: center;
 }
@@ -246,6 +277,30 @@ select {
   color: var(--text);
   font-size: 13px;
   font-variant-numeric: tabular-nums;
+}
+
+.run-status {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #12161b;
+  padding: 10px 12px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 12px;
+}
+
+.run-status strong {
+  font-weight: 650;
+}
+
+.run-status span {
+  color: var(--muted);
+}
+
+.run-status.error {
+  border-color: #643f3f;
+  background: #1a1415;
 }
 
 .summary-grid {
@@ -571,6 +626,22 @@ tbody tr:hover {
   display: block;
   font-size: 12px;
   line-height: 1.45;
+}
+
+.benchmark-controls {
+  border-bottom: 1px solid var(--line-soft);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 130px;
+  gap: 12px;
+  padding: 12px 14px;
+  align-items: end;
+}
+
+.benchmark-controls label {
+  color: var(--muted);
+  display: grid;
+  gap: 7px;
+  font-size: 12px;
 }
 
 .control-result {
